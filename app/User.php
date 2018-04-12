@@ -5,10 +5,31 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @SWG\Definition(type="object")
+ */
 class User extends Authenticatable
 {
     use Notifiable;
 
+
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
+    private $email;
     /**
      * The attributes that are mass assignable.
      *
