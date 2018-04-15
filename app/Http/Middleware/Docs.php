@@ -19,8 +19,6 @@ class Docs
         if (strpos($request->headers->get("Authorization"),"Bearer ") === false) {
             $request->headers->set("Authorization","Bearer ".$request->headers->get("Authorization"));
         }
-        $response = $next($request);
-
-        return $response;
+        return $next($request);
     }
 }

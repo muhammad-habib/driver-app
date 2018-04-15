@@ -22,9 +22,21 @@ class Pet extends Controller
      *         response=200,
      *         description="successful operation",
      *         @SWG\Schema(
-     *             type="array",
-     *             @SWG\Items(ref="#/definitions/User"),
-     *             maxItems=3
+     *              @SWG\Property(
+     *                      property="status",
+     *                      type="string",
+     *                      default=200
+     *                  ),
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=true
+     *                  ),
+     *              @SWG\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @SWG\Items(ref="#/definitions/User")
+     *                  ),
      *         ),
      *     ),
      *     @SWG\Response(

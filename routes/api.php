@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('users','Pet@index');
+Route::middleware(['docs','test'])->get('users','Pet@index');
 
