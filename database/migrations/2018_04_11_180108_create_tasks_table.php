@@ -19,9 +19,19 @@ class CreateTasksTable extends Migration
             $table->string('address');
             $table->string('lat');
             $table->string('long');
-            $table->string('user_name');
+            $table->string('customer_name');
+            $table->string('customer_phone');
             $table->string('city');
             $table->string('area');
+            $table->string('country');
+            $table->string('streetNumber');
+            $table->string('streetName');
+            $table->timestamp('completeAfter');
+            $table->timestamp('completeBefore');
+            $table->string('pickUpAddress');
+            $table->string('pickUpLat');
+            $table->string('pickUpLong');
+            
 
             // the driver relationship -> Driver (1) to (*) Task
             $table->unsignedInteger('driver_id');
@@ -32,6 +42,8 @@ class CreateTasksTable extends Migration
             // the company relationship -> Company (1) to (*) Task
             $table->unsignedInteger('company_id');
 
+            // the driver relationship -> Driver (1) to (*) Task
+            $table->unsignedInteger('payment_type_id');
 
             $table->timestamps();
         });

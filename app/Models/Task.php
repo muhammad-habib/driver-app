@@ -9,14 +9,28 @@ class Task extends Model
     protected $primaryKey = 'id';
     protected $table = 'tasks';
     protected $fillable = [
-        'awb',
+        'id',
         'address',
+        'awb',
         'lat',
         'long',
-        'user_name',
         'driver_id',
         'batch_id',
         'company_id',
+        'customer_name',
+        'customer_phone',
+        'city',
+        'area',
+        'country',
+        'streetNumber',
+        'streetName',
+        'completeAfter',
+        'completeBefore',
+        'pickUpAddress',
+        'pickUpLat',
+        'pickUpLong',
+
+
     ];
 
     public function batch()
