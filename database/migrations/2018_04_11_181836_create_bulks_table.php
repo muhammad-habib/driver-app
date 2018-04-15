@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompaniesTable extends Migration
+class CreateBulksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('bulks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name_ar');
-            $table->string('name_en');
+
+            // the driver relationship -> Driver (1) to (*) bulk
+            $table->unsignedInteger('driver_id')->nullable();
+
+            // the company relationship -> Company (1) to (*) bulk
+            $table->unsignedInteger('company_id');
+
             $table->timestamps();
         });
-            // Insert some stuff
-        DB::table('companies')->insert(
-            array(
-                'name_ar' => 'zad',
-                'name_en' => 'زاد'
-            )
-        );
     }
 
     /**
@@ -35,6 +33,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('bulks');
     }
 }
