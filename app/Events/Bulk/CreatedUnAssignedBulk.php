@@ -33,6 +33,30 @@ class CreatedUnAssignedBulk
      */
     public function broadcastOn()
     {
-        return [new Channel('channel-name')];
+        return [
+            new Channel('channel-name')
+        ];
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return [
+            'tasks' => $this->bulk->tasks
+        ];
+    }
+
+    /**
+     * Determine if this event should broadcast.
+     *
+     * @return bool
+     */
+    public function broadcastWhen()
+    {
+        return config('realTime.status') == 'on';
     }
 }

@@ -8,8 +8,6 @@ use App\Lib\Log\ValidationError;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Bulk;
-use App\Models\Task;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class TasksBulkController extends Controller

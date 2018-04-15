@@ -31,6 +31,7 @@ class Bulk extends Model
     public function addTasks(array $tasks){
         foreach($tasks as $task){
             $task->bulk_id = $this->id;
+            $task->company_id = $this->company_id;
             Task::create($task);
         }
     }
