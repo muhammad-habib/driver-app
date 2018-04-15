@@ -16,6 +16,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\Bulk\CreatedUnAssignedBulk' => [
+            'App\Listeners\Bulk\NotifyAllWorkersForCreatedUnAssignedBulk',
+            'App\Listeners\Bulk\WebHooks\SendWebHookForCreatedUnAssignedBulk',
+        ],
+        
     ];
 
     /**

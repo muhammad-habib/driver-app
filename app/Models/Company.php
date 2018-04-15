@@ -23,9 +23,9 @@ class Company extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function batches()
+    public function bulk()
     {
-        return $this->hasMany(Batch::class);
+        return $this->hasMany(Bulk::class);
     }
 
 }

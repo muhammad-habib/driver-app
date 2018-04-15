@@ -24,24 +24,30 @@ class CreateTasksTable extends Migration
             $table->string('city');
             $table->string('area');
             $table->string('country');
-            $table->string('streetNumber');
-            $table->string('streetName');
-            $table->timestamp('completeAfter');
-            $table->timestamp('completeBefore');
-            $table->string('pickUpAddress');
-            $table->string('pickUpLat');
-            $table->string('pickUpLong');
+            $table->string('street_number');
+            $table->string('street_name');
+            $table->timestamp('complete_after');
+            $table->timestamp('complete_before');
+            $table->string('pick_up_address');
+            $table->string('pick_up_lat');
+            $table->string('pick_up_long');
             
 
             // the driver relationship -> Driver (1) to (*) Task
             $table->unsignedInteger('driver_id');
 
-            // the batch relationship -> Batch (1) to (*) Task
-            $table->unsignedInteger('batch_id');
+            // the bulk relationship -> bulk (1) to (*) Task
+            $table->unsignedInteger('bulk_id');
 
             // the company relationship -> Company (1) to (*) Task
             $table->unsignedInteger('company_id');
 
+            // the admin relationship -> admin (1) to (*) Task
+            $table->unsignedInteger('created_by');
+
+            // the task_status relationship -> task_status (1) to (*) Task
+            $table->unsignedInteger('task_status_id');
+            
             // the driver relationship -> Driver (1) to (*) Task
             $table->unsignedInteger('payment_type_id');
 

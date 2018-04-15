@@ -19,6 +19,13 @@ class CreateCompaniesTable extends Migration
             $table->string('name_en');
             $table->timestamps();
         });
+            // Insert some stuff
+        DB::table('companies')->insert(
+            array(
+                'name_ar' => 'zad',
+                'name_en' => 'زاد'
+            )
+        );
     }
 
     /**

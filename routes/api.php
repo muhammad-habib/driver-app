@@ -17,5 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::resource('tasks', 'api\TaskController');
+Route::post('tasks-bulk','api\TasksBulkController@store');
+Route::get('users','Pet@index');
+

@@ -15,27 +15,27 @@ class Task extends Model
         'lat',
         'long',
         'driver_id',
-        'batch_id',
+        'bulk_id',
         'company_id',
         'customer_name',
         'customer_phone',
         'city',
         'area',
         'country',
-        'streetNumber',
-        'streetName',
-        'completeAfter',
-        'completeBefore',
-        'pickUpAddress',
-        'pickUpLat',
-        'pickUpLong',
+        'street_number',
+        'street_name',
+        'complete_after',
+        'complete_before',
+        'pick_up_address',
+        'pick_up_lat',
+        'pick_up_long',
 
 
     ];
 
-    public function batch()
+    public function bulk()
     {
-        return $this->belongsTo(Batch::class);
+        return $this->belongsTo(Bulk::class,'bulk_id');
     }
 
     public function company()
@@ -47,6 +47,16 @@ class Task extends Model
     {
         return $this->belongsTo(Driver::class);
     }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(TaskStatus::class);
+    }
+
 
 
 
