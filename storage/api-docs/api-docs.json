@@ -34,11 +34,22 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/User"
-                            },
-                            "maxItems": 3
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "default": 200
+                                },
+                                "success": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
+                                }
+                            }
                         }
                     },
                     "400": {
