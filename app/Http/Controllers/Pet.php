@@ -16,7 +16,7 @@ class Pet extends Controller
      *     summary="Get All Users",
      *     tags={"User"},
      *     description="Get All Users",
-     *     operationId="findPetsByTags",
+     *     operationId="index",
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response=200,
