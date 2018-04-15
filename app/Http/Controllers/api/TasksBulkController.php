@@ -2,28 +2,33 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Events\Bulk\CreatedUnAssignedBulk;
+use App\Lib\Log\ServerError;
+use App\Lib\Log\ValidationError;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Bulk;
 use App\Models\Task;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class TasksBulkController extends Controller
 {
 
-    public function store(Request $request)
+    public function createUnAssignedBulkOfTasks(Request $request)
     {
 
-        try{
+        try {
 
             $validator = Validator::make($request->all(), [
-                'tasks'=>'required|array',
-                'bulk_id' => 'required|string',
+                'tasks' => 'required|array',
+                'awb' => 'required|string',
                 'tasks.*.complete_after' => 'required|date',
                 'tasks.*.complete_before' => 'required|date',
                 'tasks.*.address' => 'required|string',
                 'tasks.*.lat' => 'required|string',
                 'tasks.*.long' => 'required|string',
-                'tasks.*.bulk_id' => 'numeric',
+                'tasks.*.awb' => 'string',
                 'tasks.*.customer_name' => 'required|string',
                 'tasks.*.customer_phone' => 'required|string',
                 'tasks.*.city' => 'string',
@@ -32,38 +37,25 @@ class TasksBulkController extends Controller
                 'tasks.*.street_number' => 'string',
                 'tasks.*.street_name' => 'string',
             ]);
-   
-            if($validator->fails()){
-                
-                return response()->json(array('success' => false,
-                    'status_code' => 400,
-                    'message' => $validator->errors()
-                ),400);
+
+            if ($validator->fails()) {
+                return ValidationError::handle($validator);
             }
             //create bulk 
             $bulk = new Bulk();
-            $bulk->save(); 
+            $bulk->awb = $request->awb;
+            $bulk->company_id = $request->company_id;
+            $bulk->save();
             //add tasks to bulk
             $bulk->addTasks($request->tasks);
             //fire createdTask event
-            event(new CreatedUnAssignedBulk());
+            event(new CreatedUnAssignedBulk($bulk));
+            return response();
 
-        
-    }catch (\Exception $e){
-
-        return response()->json(array('success' => false,
-            'message' => trans('validation.500'),
-            'details' =>[
-                'file'=>$e->getFile(),
-                'line'=>$e->getLine(),
-                'error'=>$e->getMessage(),
-            ]
-        ),500);
-
+        } catch (\Exception $e) {
+            return ServerError::handle($e);
+        }
     }
-
-
-}
 
 
     //

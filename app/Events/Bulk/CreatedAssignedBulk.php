@@ -2,7 +2,6 @@
 
 namespace App\Events\Bulk;
 
-use App\Models\Bulk;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,19 +10,18 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CreatedUnAssignedBulk
+class CreatedAssignedBulk
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $bulk;
     /**
      * Create a new event instance.
-     * @param $bulk
      *
+     * @return void
      */
-    public function __construct(Bulk $bulk)
+    public function __construct()
     {
-        $this->bulk = $bulk;
+        //
     }
 
     /**
@@ -33,6 +31,6 @@ class CreatedUnAssignedBulk
      */
     public function broadcastOn()
     {
-        return [new Channel('channel-name')];
+        return new PrivateChannel('channel-name');
     }
 }
