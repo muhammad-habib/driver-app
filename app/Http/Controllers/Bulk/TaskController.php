@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Bulk;
 
 use App\Models\Task;
 use Illuminate\Http\Request;

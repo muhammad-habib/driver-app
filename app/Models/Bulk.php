@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Enums\Task\ATaskStatus;
 class Bulk extends Model
 {
     protected $primaryKey = 'id';
@@ -11,6 +11,7 @@ class Bulk extends Model
     protected $fillable = [
         'driver_id',
         'company_id',
+        'awb',
     ];
 
 
@@ -30,8 +31,9 @@ class Bulk extends Model
     
     public function addTasks(array $tasks){
         foreach($tasks as $task){
-            $task->bulk_id = $this->id;
-            $task->company_id = $this->company_id;
+            $task['bulk_id'] = $this->id;
+            $task['task_status_id'] = ATaskStatus::NEW;
+            $task['company_id'] = $this->company_id;
             Task::create($task);
         }
     }

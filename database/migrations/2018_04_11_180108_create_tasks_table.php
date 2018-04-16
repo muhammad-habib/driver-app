@@ -14,27 +14,27 @@ class CreateTasksTable extends Migration
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedInteger('id');
             $table->string('awb')->unique();
             $table->string('address');
             $table->string('lat');
             $table->string('long');
             $table->string('customer_name');
             $table->string('customer_phone');
-            $table->string('city');
-            $table->string('area');
-            $table->string('country');
-            $table->string('street_number');
-            $table->string('street_name');
+            $table->string('city')->nullable();;
+            $table->string('area')->nullable();;
+            $table->string('country')->nullable();;
+            $table->string('street_number')->nullable();;
+            $table->string('street_name')->nullable();;
             $table->timestamp('complete_after');
             $table->timestamp('complete_before');
-            $table->string('pick_up_address');
-            $table->string('pick_up_lat');
-            $table->string('pick_up_long');
+            $table->string('pick_up_address')->nullable();;
+            $table->string('pick_up_lat')->nullable();;
+            $table->string('pick_up_long')->nullable();;
             
 
             // the driver relationship -> Driver (1) to (*) Task
-            $table->unsignedInteger('driver_id');
+            $table->unsignedInteger('driver_id')->nullable();;
 
             // the bulk relationship -> bulk (1) to (*) Task
             $table->unsignedInteger('bulk_id');
@@ -43,15 +43,19 @@ class CreateTasksTable extends Migration
             $table->unsignedInteger('company_id');
 
             // the admin relationship -> admin (1) to (*) Task
-            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('created_by')->nullable();
 
             // the task_status relationship -> task_status (1) to (*) Task
             $table->unsignedInteger('task_status_id');
             
             // the driver relationship -> Driver (1) to (*) Task
-            $table->unsignedInteger('payment_type_id');
+            $table->unsignedInteger('payment_type_id')->nullable();;
 
             $table->timestamps();
+
+            ///
+            $table->primary(['company_id','awb']);
+            
         });
     }
 

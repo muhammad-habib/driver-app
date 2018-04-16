@@ -29,6 +29,7 @@ class Task extends Model
         'pick_up_address',
         'pick_up_lat',
         'pick_up_long',
+        'task_status_id',
 
 
     ];

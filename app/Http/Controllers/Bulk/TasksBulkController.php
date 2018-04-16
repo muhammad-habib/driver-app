@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Bulk;
 
 use App\Events\Bulk\CreatedUnAssignedBulk;
 use App\Lib\Log\ServerError;
@@ -15,7 +15,6 @@ class TasksBulkController extends Controller
 
     public function createUnAssignedBulkOfTasks(Request $request)
     {
-
         try {
 
             $validator = Validator::make($request->all(), [
@@ -48,7 +47,10 @@ class TasksBulkController extends Controller
             $bulk->addTasks($request->tasks);
             //fire createdTask event
             event(new CreatedUnAssignedBulk($bulk));
-            return response();
+
+            return response()->json([
+                'message' => trans('bulk.createAssignedBulk.successfully'),
+            ], 200);
 
         } catch (\Exception $e) {
             return ServerError::handle($e);

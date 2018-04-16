@@ -25,6 +25,42 @@ class CreateTaskStatus extends Migration
 
             $table->timestamps();
         });
+
+            // Insert some stuff
+            DB::table('task_status')->insert([
+                array(
+                    'title_ar' => 'جديد',
+                    'title_en' => 'New',
+                    'color' => '#DAA520',
+                    'priority' => '1',
+                ),
+                array(
+                    'title_ar' => 'جاهز',
+                    'title_en' => 'Ready',
+                    'color' => '#1E90FF',
+                    'priority' => '1',
+                ),
+                array(
+                    'title_ar' => 'فى الطريق',
+                    'title_en' => 'INTRANSIT',
+                    'color' => '#FBA15A',
+                    'priority' => '1',
+                ),
+                array(
+                    'title_ar' => 'تم التسليم',
+                    'title_en' => 'SUCCESSFUL',
+                    'color' => 'green',
+                    'priority' => '1',
+                ),
+                array(
+                    'title_ar' => 'فشل التسليم',
+                    'title_en' => 'FAILED',
+                    'color' => 'red',
+                    'priority' => '1',
+                ),
+                ]
+            );
+            
     }
 
     /**
