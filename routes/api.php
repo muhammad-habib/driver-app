@@ -17,10 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'tasks-bulk', 
-              'namespace' => 'Bulk'], function () {
-                Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');                  
-              });
-Route::get('users','Pet@index');
-Route::middleware(['docs','test'])->get('users','Pet@index');
+Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
+    Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
+});
+
+Route::group(['prefix' => 'task', 'namespace' => 'Task'], function () {
+    Route::post('/deliver', 'TaskController@deliverTask');
+});
+
+Route::get('users', 'Pet@index');
+Route::middleware(['docs', 'test'])->get('users', 'Pet@index');
 
