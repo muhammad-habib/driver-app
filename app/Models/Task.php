@@ -36,26 +36,29 @@ class Task extends Model
         'payment_type_id'
 
     ];
-    public $id;
-    public $address;
-    public $awb;
-    public $lat;
-    public $long;
-    public $driver_id;
-    public $bulk_id;
-    public $company_id;
-    public $customer_name;
-    public $customer_phone;
-    public $city;
-    public $area;
-    public $country;
-    public $street_number;
-    public $street_name;
-    public $complete_after;
-    public $complete_before;
-    public $pick_up_address;
-    public $pick_up_lat;
-    public $pick_up_long;
+
+    private $id;
+    private $address;
+    private $awb;
+    private $lat;
+    private $long;
+    private $driver_id;
+    private $bulk_id;
+    private $company_id;
+    private $customer_name;
+    private $customer_phone;
+    private $city;
+    private $area;
+    private $country;
+    private $street_number;
+    private $street_name;
+    private $complete_after;
+    private $complete_before;
+    private $pick_up_address;
+    private $pick_up_lat;
+    private $pick_up_long;
+
+
 
     public function bulk()
     {
@@ -85,8 +88,6 @@ class Task extends Model
     {
         return $this->belongsTo(PaymentType::class);
     }
-
-
 
 
 }
