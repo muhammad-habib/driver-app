@@ -35,7 +35,7 @@ class CreateTasksTable extends Migration
      
 
             // the driver relationship -> Driver (1) to (*) Task
-            $table->unsignedInteger('driver_id')->nullable();;
+            $table->unsignedInteger('driver_id')->nullable();
 
             // the bulk relationship -> bulk (1) to (*) Task
             $table->unsignedInteger('bulk_id');

@@ -28,27 +28,6 @@ class CreatePaymentType extends Migration
             $table->timestamps();
 
         });
-
-                    // Insert some stuff
-                    DB::table('payment_type')->insert([
-                        array(
-                            'title_ar' => 'كاش',
-                            'title_en' => 'Cash',
-                            'company_id'=>1,
-                            'code' => '1',
-                        ),
-                        array(
-                            'title_ar' => 'mada',
-                            'title_en' => 'مدا',
-                            'company_id'=>1,
-                            'code' => '2',
-                        ),
-                        array(
-                            'title_ar' => 'لول',
-                            'title_en' => 'Lol',
-                            'company_id'=>1,
-                            'code' => '3',
-                        )]);
         
 
     }

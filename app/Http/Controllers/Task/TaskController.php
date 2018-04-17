@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Task;
 
+use App\Enums\Task\ATaskOperationType;
 use App\Enums\Task\ATaskStatus;
+use App\Events\Task\RefuseTask;
 use App\Events\Task\DeliverTask;
 use App\Events\Task\StartTask;
 use App\Lib\Log\LogicalError;
@@ -10,6 +12,7 @@ use App\Lib\Log\ServerError;
 use App\Lib\Log\ValidationError;
 use App\Models\Driver;
 use App\Models\Task;
+use App\Models\TaskOperation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -35,7 +38,7 @@ class TaskController extends Controller
 
         try{
             // Get Task
-            $task = Task::query()->find($request->task_id);
+            $task = Task::find($request->task_id);
             //Get Driver
             $driver = Driver::query()->find(1);
             //Check if Task Driver is the same Driver
@@ -46,6 +49,7 @@ class TaskController extends Controller
                 return LogicalError::handle('task.deliverTask.invalidTaskStatus');
             $task->task_status_id = ATaskStatus::SUCCESSFUL;
             $task->save();
+
             // raise deliver task event
             event(new DeliverTask($task));
             return response()->json([
@@ -90,6 +94,59 @@ class TaskController extends Controller
 
             // raise the start task event
             event(new StartTask($task));
+
+        }catch (\Exception $e){
+            return ServerError::handle($e);
+        }
+    }
+
+    /**
+     * @author Mahmoud Soliman
+     * @api refuse task by driver
+     * @since 17/04/2018
+     * @param Request -> task_id
+     * @param Request -> rejection_reason
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function refuseTask(Request $request)
+    {
+        try {
+
+            // make the needed parameters validation
+            $validator = Validator::make($request->all(),[
+                'task_id' => 'required|numeric|exists:tasks,id',
+                'reason' => 'string'
+            ]);
+
+            // return errors if any
+            if($validator->fails()){
+                return ValidationError::handle($validator);
+            }
+
+            // get the task
+            $task = Task::find($request->task_id);
+
+            // change the task status to be Refused and store the reason if any
+            $task->update([
+                'task_status_id' => ATaskStatus::REFUSED
+            ]);
+
+            if($request->has('reason') && trim($request->reason) != ''){
+
+                // TODO add created by driver
+                TaskOperation::create([
+                    'task_id' => $task->id,
+                    'description' => $request->reason,
+                    'operation_type_id' => ATaskOperationType::TASK_REFUSED
+                ]);
+            }
+
+
+            // raise the refuse task event
+            event(new RefuseTask($task));
+
 
         }catch (\Exception $e){
             return ServerError::handle($e);
