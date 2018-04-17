@@ -61,7 +61,7 @@ class CreateTasksBulkTest extends TestCase
         $response->assertStatus(200)            
                  ->assertJson([
                             "message" => "Bulk created successfully",
-                        ]);;
+                        ]);
 
     }
 }
