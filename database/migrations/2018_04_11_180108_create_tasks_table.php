@@ -14,24 +14,25 @@ class CreateTasksTable extends Migration
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->unsignedInteger('id');
-            $table->string('awb')->unique();
+            $table->increments('id');
+            $table->string('awb');
             $table->string('address');
             $table->string('lat');
             $table->string('long');
             $table->string('customer_name');
             $table->string('customer_phone');
-            $table->string('city')->nullable();;
-            $table->string('area')->nullable();;
-            $table->string('country')->nullable();;
-            $table->string('street_number')->nullable();;
-            $table->string('street_name')->nullable();;
+            $table->string('city')->nullable();
+            $table->string('area')->nullable();
+            $table->string('country')->nullable();
+            $table->string('street_number')->nullable();
+            $table->string('street_name')->nullable();
             $table->timestamp('complete_after');
             $table->timestamp('complete_before');
-            $table->string('pick_up_address')->nullable();;
-            $table->string('pick_up_lat')->nullable();;
-            $table->string('pick_up_long')->nullable();;
-            
+            $table->string('pick_up_address')->nullable();
+            $table->string('pick_up_lat')->nullable();
+            $table->string('pick_up_long')->nullable();
+            $table->string('total_price');
+     
 
             // the driver relationship -> Driver (1) to (*) Task
             $table->unsignedInteger('driver_id')->nullable();;
@@ -54,7 +55,7 @@ class CreateTasksTable extends Migration
             $table->timestamps();
 
             ///
-            $table->primary(['company_id','awb']);
+            // $table->primary(['company_id','awb']);
             
         });
     }
