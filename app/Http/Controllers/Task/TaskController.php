@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Task;
 
 use App\Enums\Task\ATaskStatus;
+use App\Lib\Log\LogicalError;
 use App\Lib\Log\ServerError;
 use App\Lib\Log\ValidationError;
 use App\Models\Driver;
@@ -23,16 +24,21 @@ class TaskController extends Controller
             return ValidationError::handle($validator);
 
         try{
+
             // Get Task
             $task = Task::query()->find($request->task_id);
-            //Get Driver
+
+            // Get Driver
             $driver = Driver::query()->find(2);
-            //Check if Task Driver is the same Driver
+
+            // Check if Task Driver is the same Driver
             if ($task->driver_id != $driver->id)
-                return \TaskError::handle('task.deliverTask.invalidTaskDriver');
+                return LogicalError::handle(trans('task.deliverTask.invalidTaskDriver'));
+
             // Check Task to be in INTRANSIT Status
             if ($task->task_status_id != ATaskStatus::INTRANSIT)
-                return \TaskError::handle('task.deliverTask.invalidTaskStatus');
+                return LogicalError::handle(trans('task.deliverTask.invalidTaskStatus'));
+
 
 
 
