@@ -36,6 +36,7 @@ class Task extends Model
         'payment_type_id'
 
     ];
+
     private $id;
     private $address;
     private $awb;
@@ -85,8 +86,6 @@ class Task extends Model
     {
         return $this->belongsTo(PaymentType::class);
     }
-
-
 
 
 }

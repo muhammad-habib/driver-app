@@ -1,23 +1,21 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: anoos
- * Date: 15/04/18
- * Time: 02:16 م
+ * User: MSoliman
+ * Date: 4/17/2018
+ * Time: 3:17 PM
  */
 
 namespace App\Lib\Log;
 
 
-
-class ValidationError
+class LogicalError implements ErrorHandler
 {
-    public static function handle($validator) {
-
+    public static function handle($message)
+    {
         return Response()->json([
             'message' => trans('validation.invalidFields'),
-            'details' => $validator->errors()
+            'details' => $message
         ], 400);
-
     }
 }
