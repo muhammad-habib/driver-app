@@ -30,7 +30,8 @@ class Task extends Model
         'pick_up_lat',
         'pick_up_long',
         'task_status_id',
-
+        'total_price',
+        'payment_type_id'
 
     ];
 
@@ -56,8 +57,11 @@ class Task extends Model
     public function status()
     {
         return $this->belongsTo(TaskStatus::class);
+    }    
+    public function payment()
+    {
+        return $this->belongsTo(PaymentType::class);
     }
-
 
 
 
