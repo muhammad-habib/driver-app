@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Task;
 
 use App\Enums\Task\ATaskStatus;
+use App\Events\Task\DeliverTask;
 use App\Events\Task\StartTask;
 use App\Lib\Log\LogicalError;
 use App\Lib\Log\ServerError;
@@ -15,6 +16,14 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
+    /**
+     * @author Muhammad Habib
+     * @api Deliver task by driver
+     * @since 17/04/2018
+     * @param Request $request
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deliverTask(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -38,6 +47,8 @@ class TaskController extends Controller
                 return LogicalError::handle(trans('task.deliverTask.invalidTaskStatus'));
             $task->task_status_id = ATaskStatus::SUCCESSFUL;
             $task->save();
+            // raise deliver task event
+            event(new DeliverTask($task));
             return response()->json([
                 'message' => trans('task.deliverTask.successfully'),
             ], 200);
