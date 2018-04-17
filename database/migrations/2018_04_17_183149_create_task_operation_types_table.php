@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskStatus extends Migration
+class CreateTaskOperationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,13 @@ class CreateTaskStatus extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('task_status', function (Blueprint $table) {
+        Schema::create('task_operation_types', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('title_ar');
             $table->string('title_en');
-            $table->string('color'   );
-
-            $table->integer('priority');
-            $table->integer('code');
-
+            $table->string('color')->nullable();
             $table->timestamps();
         });
-            
     }
 
     /**
@@ -36,7 +29,6 @@ class CreateTaskStatus extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('task_status');        
+        Schema::dropIfExists('task_operation_types');
     }
 }

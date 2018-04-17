@@ -13,4 +13,5 @@ abstract class ATaskStatus{
     const INTRANSIT = 3;
     const SUCCESSFUL = 4;
     const FAILED = 5;
+    const REFUSED = 6;
 }

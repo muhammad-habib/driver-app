@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('start-task', 'TaskController@startTask');
     Route::post('deliver-task', 'TaskController@deliverTask');
+    Route::post('refuse-task', 'TaskController@refuseTask');
 });
 
 // Tasks Buld APIs
