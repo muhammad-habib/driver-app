@@ -10,7 +10,7 @@ namespace App\Lib\Log;
 
 
 
-class ValidationError
+class   ValidationError
 {
     public static function handle($validator) {
         return response()->json(array('success' => false,
