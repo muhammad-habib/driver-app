@@ -21,7 +21,7 @@ class Test
         else
             return response()->json([
                 'success' => false,
-                'status' => 400,
+                'status' => 401,
                 'data'=>[],
             ]);
     }

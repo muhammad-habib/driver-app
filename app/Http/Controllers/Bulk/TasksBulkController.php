@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Bulk;
 
 use App\Events\Bulk\CreatedUnAssignedBulk;
 use App\Lib\Log\ServerError;
@@ -13,9 +13,47 @@ use Illuminate\Support\Facades\Validator;
 class TasksBulkController extends Controller
 {
 
+    /**
+     * @SWG\Post(
+     *     path="/tasks-bulk/createUnAssignedBulkOfTasks",
+     *     summary="create un assigned bulk of tasks",
+     *     description="Multiple status values can be provided with comma separated strings",
+     *     operationId="createUnAssignedBulkOfTasks",
+     *     produces={ "application/json"},
+     *     tags={bulk},
+     *     @SWG\Parameter(  
+     *         name="tasks",
+     *         in="query",
+     *         description="",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             enum={"available", "pending", "sold"},
+     *             default="available"
+     *         ),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="#/definitions/Pet")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid status value",
+     *     ),
+     *     security={
+     *       {"petstore_auth": {"write:pets", "read:pets"}}
+     *     }
+     * )
+     */
+    
     public function createUnAssignedBulkOfTasks(Request $request)
     {
-
         try {
 
             $validator = Validator::make($request->all(), [
@@ -29,6 +67,8 @@ class TasksBulkController extends Controller
                 'tasks.*.awb' => 'string',
                 'tasks.*.customer_name' => 'required|string',
                 'tasks.*.customer_phone' => 'required|string',
+                'tasks.*.total_price' => 'required|numeric',
+                'tasks.*.payment_type_id' => 'required|numeric',
                 'tasks.*.city' => 'string',
                 'tasks.*.area' => 'string',
                 'tasks.*.country' => 'string',
@@ -48,7 +88,10 @@ class TasksBulkController extends Controller
             $bulk->addTasks($request->tasks);
             //fire createdTask event
             event(new CreatedUnAssignedBulk($bulk));
-            return response();
+
+            return response()->json([
+                'message' => trans('bulk.createAssignedBulk.successfully'),
+            ], 200);
 
         } catch (\Exception $e) {
             return ServerError::handle($e);
