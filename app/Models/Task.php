@@ -58,8 +58,6 @@ class Task extends Model
     private $pick_up_lat;
     private $pick_up_long;
 
-
-
     public function bulk()
     {
         return $this->belongsTo(Bulk::class, 'bulk_id');

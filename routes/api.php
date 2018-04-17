@@ -24,7 +24,7 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('refuse-task', 'TaskController@refuseTask');
 });
 
-// Tasks Buld APIs
+// Tasks Bulk APIs
 Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
     Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
 });
