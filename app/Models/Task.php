@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Task\Assignable;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use Assignable;
     protected $primaryKey = 'id';
     protected $table = 'tasks';
     protected $fillable = [
@@ -29,13 +31,31 @@ class Task extends Model
         'pick_up_address',
         'pick_up_lat',
         'pick_up_long',
-
-
     ];
+    public $id;
+    public $address;
+    public $awb;
+    public $lat;
+    public $long;
+    public $driver_id;
+    public $bulk_id;
+    public $company_id;
+    public $customer_name;
+    public $customer_phone;
+    public $city;
+    public $area;
+    public $country;
+    public $street_number;
+    public $street_name;
+    public $complete_after;
+    public $complete_before;
+    public $pick_up_address;
+    public $pick_up_lat;
+    public $pick_up_long;
 
     public function bulk()
     {
-        return $this->belongsTo(Bulk::class,'bulk_id');
+        return $this->belongsTo(Bulk::class, 'bulk_id');
     }
 
     public function company()
@@ -52,13 +72,11 @@ class Task extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
     public function status()
     {
         return $this->belongsTo(TaskStatus::class);
     }
-
-
-
 
 
 }

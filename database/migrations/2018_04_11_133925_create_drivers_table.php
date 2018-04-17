@@ -23,6 +23,10 @@ class CreateDriversTable extends Migration
             // the company relationship -> Company (1) to (*) Driver
             $table->unsignedInteger('company_id');
 
+            $table->boolean('active')->default(true)->index();
+
+            $table->boolean('on_duty')->default(false)->index();
+
             $table->timestamps();
         });
     }

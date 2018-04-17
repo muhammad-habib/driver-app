@@ -11,8 +11,13 @@ class Driver extends Model
     protected $fillable = [
         'name',
         'awb',
-        'company_id'
+        'company_id',
+        'active'
     ];
+    public $name;
+    public $awb;
+    public $company_id;
+    public $active;
 
     public function company()
     {
