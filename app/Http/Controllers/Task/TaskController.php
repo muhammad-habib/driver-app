@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Task;
 
 use App\Enums\Task\ATaskStatus;
 use App\Lib\Log\ServerError;
+use App\Lib\Log\Task\TaskError;
 use App\Lib\Log\ValidationError;
 use App\Models\Driver;
 use App\Models\Task;
@@ -26,14 +27,18 @@ class TaskController extends Controller
             // Get Task
             $task = Task::query()->find($request->task_id);
             //Get Driver
-            $driver = Driver::query()->find(2);
+            $driver = Driver::query()->find(1);
             //Check if Task Driver is the same Driver
             if ($task->driver_id != $driver->id)
-                return \TaskError::handle('task.deliverTask.invalidTaskDriver');
+                return TaskError::handle(trans('task.deliverTask.invalidTaskDriver'));
             // Check Task to be in INTRANSIT Status
             if ($task->task_status_id != ATaskStatus::INTRANSIT)
-                return \TaskError::handle('task.deliverTask.invalidTaskStatus');
-
+                return TaskError::handle(trans('task.deliverTask.invalidTaskStatus'));
+            $task->task_status_id = ATaskStatus::SUCCESSFUL;
+            $task->save();
+            return response()->json([
+                'message' => trans('task.deliverTask.successfully'),
+            ], 200);
 
 
         }catch (\Exception $e){

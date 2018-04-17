@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Bulk\NotifyAllWorkersForCreatedAssignedBulk',
             'App\Listeners\Bulk\WebHooks\SendWebHookForCreatedAssignedBulk',
         ],
+        'App\Events\Task\DeliverTask' => [
+
+        ]
         
     ];
 

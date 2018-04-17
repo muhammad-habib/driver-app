@@ -5,6 +5,8 @@
  * Date: 17/04/18
  * Time: 02:31 م
  */
+namespace App\Lib\Log\Task;
+
 use App\Lib\Log\ErrorHandler;
 
 

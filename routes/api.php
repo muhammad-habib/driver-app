@@ -23,7 +23,7 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('deliver-task', 'TaskController@deliverTask');
 });
 
-// Tasks Buld APIs
+// Tasks Bulk APIs
 Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
     Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
 });
