@@ -23,7 +23,7 @@ class DeliverTask
      */
     public function __construct(Task $task)
     {
-        $this->$task = $task;
+        $this->task = $task;
     }
 
     /**

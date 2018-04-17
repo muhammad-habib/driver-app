@@ -39,7 +39,7 @@ class TaskController extends Controller
         try{
 
             // Get Task
-            $task = Task::query()->find($request->task_id);
+            $task = Task::find($request->task_id);
             //Get Driver
             $driver = Driver::query()->find(1);
             //Check if Task Driver is the same Driver
@@ -50,6 +50,7 @@ class TaskController extends Controller
                 return LogicalError::handle(trans('task.deliverTask.invalidTaskStatus'));
             $task->task_status_id = ATaskStatus::SUCCESSFUL;
             $task->save();
+
             // raise deliver task event
             event(new DeliverTask($task));
             return response()->json([
