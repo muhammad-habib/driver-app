@@ -21,6 +21,11 @@ Route::group(['prefix' => 'tasks-bulk',
               'namespace' => 'Bulk'], function () {
                 Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');                  
               });
+Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
+    Route::post('start-task', )
+});
+
+
 Route::get('users','Pet@index');
 Route::middleware(['docs','test'])->get('users','Pet@index');
 
