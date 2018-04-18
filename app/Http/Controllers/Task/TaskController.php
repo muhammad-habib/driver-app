@@ -37,17 +37,16 @@ class TaskController extends Controller
             return ValidationError::handle($validator);
 
         try{
-
             // Get Task
             $task = Task::find($request->task_id);
             //Get Driver
             $driver = Driver::query()->find(1);
             //Check if Task Driver is the same Driver
             if ($task->driver_id != $driver->id)
-                return LogicalError::handle(trans('task.deliverTask.invalidTaskDriver'));
+                return LogicalError::handle('task.deliverTask.invalidTaskDriver');
             // Check Task to be in INTRANSIT Status
             if ($task->task_status_id != ATaskStatus::INTRANSIT)
-                return LogicalError::handle(trans('task.deliverTask.invalidTaskStatus'));
+                return LogicalError::handle('task.deliverTask.invalidTaskStatus');
             $task->task_status_id = ATaskStatus::SUCCESSFUL;
             $task->save();
 

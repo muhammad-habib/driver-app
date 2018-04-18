@@ -31,7 +31,7 @@ class CreateTasksBulkTest extends TestCase
                 "city" => "lol",
                 "area" => "lol",
                 "total_price"=>100,
-                "payment_type_id"=>1,                
+                "payment_type_id"=>1,
                 "country" => "eg",
                 "street_number" => "1",
                 "street_name" => "st",
@@ -50,7 +50,7 @@ class CreateTasksBulkTest extends TestCase
                     "area" => "lol",
                     "country" => "eg",
                     "total_price"=>200,
-                    "payment_type_id"=>2,                
+                    "payment_type_id"=>2,
                         "street_number" => "1",
                     "street_name" => "st",
                 ],
@@ -58,10 +58,10 @@ class CreateTasksBulkTest extends TestCase
         ]
         );
 
-        $response->assertStatus(200)            
+        $response->assertStatus(200)
                  ->assertJson([
                             "message" => "Bulk created successfully",
-                        ]);;
+                        ]);
 
     }
 }
