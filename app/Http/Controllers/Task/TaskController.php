@@ -27,6 +27,73 @@ class TaskController extends Controller
      * @version 1.0
      * @return \Illuminate\Http\JsonResponse
      */
+
+    /**
+     * @SWG\Post(
+     *     path="/v1/tasks/deliver-task",
+     *     summary="Driver Can Deliver Task",
+     *     tags={"Task"},
+     *     description="Driver Can Deliver Task",
+     *     operationId="deliverTask",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="task_id",
+     *         in="formData",
+     *         description="Task ID to deliver",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Task delivered Successfully"
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Failed Operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Fields are invalid",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="Failed Operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
     public function deliverTask(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,7 +116,6 @@ class TaskController extends Controller
                 return LogicalError::handle('task.deliverTask.invalidTaskStatus');
             $task->task_status_id = ATaskStatus::SUCCESSFUL;
             $task->save();
-
             // raise deliver task event
             event(new DeliverTask($task));
             return response()->json([

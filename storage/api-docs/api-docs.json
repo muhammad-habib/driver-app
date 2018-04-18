@@ -19,6 +19,60 @@
         "https"
     ],
     "paths": {
+        "/tasks-bulk/createUnAssignedBulkOfTasks": {
+            "post": {
+                "tags": [
+                    "bulk"
+                ],
+                "summary": "create un assigned bulk of tasks",
+                "description": "Multiple status values can be provided with comma separated strings",
+                "operationId": "createUnAssignedBulkOfTasks",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tasks",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "available",
+                            "enum": [
+                                "available",
+                                "pending",
+                                "sold"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Pet"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -26,7 +80,7 @@
                 ],
                 "summary": "Get All Users",
                 "description": "Get All Users",
-                "operationId": "findPetsByTags",
+                "operationId": "index",
                 "produces": [
                     "application/json"
                 ],
@@ -438,6 +492,78 @@
                             "read:pets",
                             "write:pets"
                         ]
+                    }
+                ]
+            }
+        },
+        "/v1/tasks/deliver-task": {
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Driver Can Deliver Task",
+                "description": "Driver Can Deliver Task",
+                "operationId": "deliverTask",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "formData",
+                        "description": "Task ID to deliver",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Task delivered Successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed Operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed Operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
                     }
                 ]
             }

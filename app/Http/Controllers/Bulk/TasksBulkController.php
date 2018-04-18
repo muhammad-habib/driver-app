@@ -20,7 +20,7 @@ class TasksBulkController extends Controller
      *     description="Multiple status values can be provided with comma separated strings",
      *     operationId="createUnAssignedBulkOfTasks",
      *     produces={ "application/json"},
-     *     tags={bulk},
+     *     tags={"bulk"},
      *     @SWG\Parameter(  
      *         name="tasks",
      *         in="query",

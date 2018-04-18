@@ -1,8 +1,9 @@
 <?php
+define("API_HOST",  config('l5-swagger.constants.L5_SWAGGER_CONST_HOST'));
 /**
  * @SWG\Swagger(
  *     schemes={"https"},
- *     host="localhost/captain/public",
+ *     host=L5_SWAGGER_CONST_HOST,
  *     basePath="/api",
  *     @SWG\Info(
  *         version="1.0.0",
