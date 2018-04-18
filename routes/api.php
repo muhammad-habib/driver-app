@@ -22,6 +22,7 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('start-task', 'TaskController@startTask');
     Route::post('deliver-task', 'TaskController@deliverTask');
     Route::post('refuse-task', 'TaskController@refuseTask');
+    Route::post('acknowledge-task-failure', 'TaskController@acknowledgeTaskFailure');
 });
 
 // Tasks Bulk APIs

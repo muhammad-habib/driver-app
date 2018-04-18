@@ -528,7 +528,7 @@
                             }
                         }
                     },
-                    "400": {
+                    "403": {
                         "description": "Failed Operation",
                         "schema": {
                             "properties": {
@@ -543,7 +543,79 @@
                         }
                     },
                     "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
+        "/v1/tasks/acknowledge-task-failure": {
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Driver Can Acknowledge Task Failure",
+                "description": "Driver Can Acknowledge Task Failure",
+                "operationId": "acknowledgeTaskFailure",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "formData",
+                        "description": "Task ID to acknowledge failure",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Task Failure"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
                         "description": "Failed Operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
                         "schema": {
                             "properties": {
                                 "success": {

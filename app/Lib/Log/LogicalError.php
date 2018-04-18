@@ -16,6 +16,6 @@ class LogicalError implements ErrorHandler
         return Response()->json([
             'message' => trans('validation.invalidFields'),
             'details' => trans($message)
-        ], 400);
+        ], 403);
     }
 }

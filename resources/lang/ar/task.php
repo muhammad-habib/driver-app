@@ -12,4 +12,9 @@ return [
     'refuseTask' => [
         'successfully' => 'تم رفض المهمة بنجاح',
     ],
+    'taskFailure' => [
+        'invalidTaskDriver'=>"المهمة لا تخص هذا السائق",
+        'invalidTaskStatus'=>"لا يمكن تغير حاله هذه المهمة",
+        'successfully'=>"تم افشال المهمة",
+    ],
 ];

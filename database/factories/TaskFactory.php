@@ -28,6 +28,7 @@ $factory->define(\App\Models\Task::class, function (Faker $faker) {
         "country" => "eg",
         "street_number" => "1",
         "street_name" => "st",
+        "total_price" => 100,
         "task_status_id" => \App\Enums\Task\ATaskStatus::NEW
     ];
 });
