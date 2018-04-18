@@ -6,4 +6,10 @@ return [
         'invalidTaskStatus'=>"Can't change task status",
         'successfully'=>"Task delivered Successfully"
     ],
+    'startTask' => [
+        'successfully' => 'Task started successfully',
+    ],
+    'refuseTask' => [
+        'successfully' => 'Task refused successfully',
+    ]
 ];

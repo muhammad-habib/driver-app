@@ -53,9 +53,11 @@ class TaskController extends Controller
 
             // raise deliver task event
             event(new DeliverTask($task));
+
             return response()->json([
                 'message' => trans('task.deliverTask.successfully'),
             ], 200);
+
         }catch (\Exception $e){
             return ServerError::handle($e);
         }
@@ -92,9 +94,12 @@ class TaskController extends Controller
                 'task_status_id' => ATaskStatus::INTRANSIT
             ]);
 
-
             // raise the start task event
             event(new StartTask($task));
+
+            return Response()->json([
+                'message' => trans('task.startTask.successfully'),
+            ],200);
 
         }catch (\Exception $e){
             return ServerError::handle($e);
@@ -144,10 +149,12 @@ class TaskController extends Controller
                 ]);
             }
 
-
             // raise the refuse task event
             event(new RefuseTask($task));
 
+            return Response()->json([
+                'message' => trans('task.refuseTask.successfully'),
+            ],200);
 
         }catch (\Exception $e){
             return ServerError::handle($e);
