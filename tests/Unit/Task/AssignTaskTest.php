@@ -31,6 +31,30 @@ class AssignTaskTest extends TestCase
         $response->assertStatus(403);
     }
 
+
+    /**
+     * @author Muhammad Habib
+     * @Test Assign task to idle driver
+     * @since 19/04/2018
+     * @version 1.0
+     * @return void
+     */
+    public function testIdleDriver()
+    {
+        $task = factory(Task::class)->create();
+        $task->task_status_id = ATaskStatus::NEW;
+        $task->company_id = 1;
+        $task->save();
+
+        $driver = factory(Driver::class)->create();
+        $driver->on_duty = false;
+        $driver->company_id = 1;
+        $driver->save();
+
+        $response = $this->post('/api/v1/tasks/assign-task', ['task_id' => $task->id, 'driver_id' => $driver->id]);
+        $response->assertStatus(403);
+    }
+
     /**
      * @author Muhammad Habib
      * @Test Assign task which is in new status
