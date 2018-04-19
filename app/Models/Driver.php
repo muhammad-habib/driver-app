@@ -14,10 +14,10 @@ class Driver extends Model
         'company_id',
         'active'
     ];
-    public $name;
-    public $awb;
-    public $company_id;
-    public $active;
+    private $name;
+    private $awb;
+    private $company_id;
+    private $active;
 
     public function company()
     {

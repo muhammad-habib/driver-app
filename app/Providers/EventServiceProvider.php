@@ -40,6 +40,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Task\NotifyAllWorkersForTaskFailure',
             'App\Listeners\Task\WebHooks\SendWebHookForTaskFailure',
         ],
+        'App\Events\Task\AssignTask' => [
+            'App\Listeners\Task\NotifyAllWorkersForAssignTask',
+            'App\Listeners\Task\WebHooks\SendWebHookForAssignTask',
+        ],
         
     ];
 

@@ -17,4 +17,9 @@ return [
         'invalidTaskStatus'=>"Can't change task status",
         'successfully'=>"Task Failure"
     ],
+    'assignTask' => [
+        'invalidTaskDriver'=>"Task Can't be assigned to this driver",
+        'invalidTaskStatus'=>"Can't change task status",
+        'successfully'=>"Task is assigned successfully"
+    ],
 ];

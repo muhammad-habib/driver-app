@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Task;
 use App\Enums\Task\ATaskOperationType;
 use App\Enums\Task\ATaskStatus;
 use App\Events\Task\AcknowledgeTaskFailure;
+use App\Events\Task\AssignTask;
 use App\Events\Task\RefuseTask;
 use App\Events\Task\DeliverTask;
 use App\Events\Task\StartTask;
@@ -230,7 +231,7 @@ class TaskController extends Controller
     /**
      * @author Muhammad Habib
      * @api Deliver task by driver
-     * @since 17/04/2018
+     * @since 18/04/2018
      * @param Request $request
      * @version 1.0
      * @return \Illuminate\Http\JsonResponse
@@ -331,6 +332,135 @@ class TaskController extends Controller
 
             return response()->json([
                 'message' => trans('task.taskFailure.successfully'),
+            ], 200);
+
+        }catch (\Exception $e){
+            return ServerError::handle($e);
+        }
+    }
+
+    /**
+     * @author Muhammad Habib
+     * @api Assign task to driver
+     * @since 19/04/2018
+     * @param Request $request
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+     * @SWG\Post(
+     *     path="/v1/tasks/assign-task",
+     *     summary="Admin Can Assign task to driver",
+     *     tags={"Task"},
+     *     description="Admin Can Assign task to driver",
+     *     operationId="assignTask",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="task_id",
+     *         in="formData",
+     *         description="Task ID to be assigned",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="driver_id",
+     *         in="formData",
+     *         description="Driver ID to assign",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Task is assigned successfully"
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Failed Operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Fields are invalid",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="SERVER ERROR",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
+
+    public function assignTask(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'task_id' => 'required|numeric|exists:tasks,id',
+            'driver_id' => 'required|numeric|exists:drivers,id',
+        ]);
+
+        if ($validator->fails())
+            return ValidationError::handle($validator);
+
+        try{
+
+            // Get Task
+            $task = Task::query()->find($request->task_id);
+
+            //Get Driver
+            $driver = Driver::query()->find($request->driver_id);
+
+            //Check if Task Company is the same with Driver
+            if ($task->company_id != $driver->company_id)
+                return LogicalError::handle('task.assignTask.invalidTaskDriver');
+
+            //Check if Driver is on duty
+            if (!$driver->on_duty)
+                return LogicalError::handle('task.assignTask.invalidTaskDriver');
+
+            // Check Task to be in New Status
+            if ($task->task_status_id != ATaskStatus::NEW)
+                return LogicalError::handle('task.assignTask.invalidTaskStatus');
+
+            $task->driver_id = $request->driver_id;
+            $task->task_status_id = ATaskStatus::READY;
+            $task->save();
+
+            // raise Assign Task event
+            event(new AssignTask($task));
+
+            return response()->json([
+                'message' => trans('task.assignTask.successfully'),
             ], 200);
 
         }catch (\Exception $e){
