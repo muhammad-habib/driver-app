@@ -27,5 +27,10 @@ return [
         'invalidTaskStatus'=>"لا يمكن تغيير السائق",
         'successfully'=>"تم اعادة اسناد المهمة بنجاح",
     ],
+    'taskArrival' => [
+        'invalidTaskDriver'=>"المهمة لا تخص هذا السائق",
+        'invalidTaskStatus'=>"لا يمكن تغير حاله هذه المهمة",
+        'successfully'=>"تم الوصول بنجاح",
+    ],
 
 ];

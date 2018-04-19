@@ -28,4 +28,9 @@ return [
         'invalidTaskStatus'=>"Can't change task driver",
         'successfully'=>"Task is reassigned successfully"
     ],
+    'taskArrival' => [
+        'invalidTaskDriver'=>"Task does't belong to this driver",
+        'invalidTaskStatus'=>"Can't change task status",
+        'successfully'=>"Driver  arrived successfully"
+    ],
 ];

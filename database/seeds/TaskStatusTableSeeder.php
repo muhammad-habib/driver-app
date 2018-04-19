@@ -56,6 +56,13 @@ class TaskStatusTableSeeder extends Seeder
                     'priority' => '1',
                     'code' => '6',
                 ),
+                array(
+                    'title_ar' => 'تم الوصول',
+                    'title_en' => 'ARRIVAL',
+                    'color' => 'yellow',
+                    'priority' => '1',
+                    'code' => '7',
+                ),
             ]
         );
     }

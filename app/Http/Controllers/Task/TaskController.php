@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Task;
 
 use App\Enums\Task\ATaskOperationType;
 use App\Enums\Task\ATaskStatus;
+use App\Events\Task\AcknowledgeTaskArrival;
 use App\Events\Task\AcknowledgeTaskFailure;
 use App\Events\Task\AssignTask;
 use App\Events\Task\ReAssignTask;
@@ -178,10 +179,11 @@ class TaskController extends Controller
      * @author Mahmoud Soliman
      * @api refuse task by driver
      * @since 17/04/2018
-     * @param Request -> task_id
-     * @param Request -> rejection_reason
-     * @version 1.0
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @internal param $Request -> task_id
+     * @internal param $Request -> rejection_reason
+     * @version 1.0
      */
 
     public function refuseTask(Request $request)
@@ -591,6 +593,120 @@ class TaskController extends Controller
 
             return response()->json([
                 'message' => trans('task.reassignTask.successfully'),
+            ], 200);
+
+        }catch (\Exception $e){
+            return ServerError::handle($e);
+        }
+    }
+
+
+
+    /**
+     * @author Muhammad Habib
+     * @api Acknowledge task arrival
+     * @since 19/04/2018
+     * @param Request $request
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+
+
+    /**
+     * @SWG\Post(
+     *     path="/v1/tasks/acknowledge-task-arrival",
+     *     summary="Driver Can Acknowledge Task Arrival",
+     *     tags={"Task"},
+     *     description="Driver Can Acknowledge Task Arrival",
+     *     operationId="acknowledgeTaskArrival",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="task_id",
+     *         in="formData",
+     *         description="Task ID to acknowledge arrival",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Task Arrival"
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Failed Operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Fields are invalid",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="SERVER ERROR",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
+
+    public function acknowledgeTaskArrival(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'task_id' => 'required|numeric|exists:tasks,id',
+        ]);
+
+        if ($validator->fails())
+            return ValidationError::handle($validator);
+
+        try{
+            // Get Task
+            $task = Task::find($request->task_id);
+            //Get Driver
+            $driver = Driver::query()->find(1);
+            //Check if Task Driver is the same Driver
+            if ($task->driver_id != $driver->id)
+                return LogicalError::handle('task.taskArrival.invalidTaskDriver');
+            // Check Task to be in INTRANSIT Status
+            if ($task->task_status_id != ATaskStatus::INTRANSIT)
+                return LogicalError::handle('task.taskArrival.invalidTaskStatus');
+            $task->task_status_id = ATaskStatus::ARRIVAL;
+            $task->save();
+            // raise Acknowledge Task Arrival event
+            event(new AcknowledgeTaskArrival($task));
+
+            return response()->json([
+                'message' => trans('task.taskArrival.successfully'),
             ], 200);
 
         }catch (\Exception $e){

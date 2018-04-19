@@ -25,6 +25,7 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('acknowledge-task-failure', 'TaskController@acknowledgeTaskFailure');
     Route::post('assign-task', 'TaskController@assignTask');
     Route::post('reassign-task', 'TaskController@ReassignTask');
+    Route::post('acknowledge-task-arrival', 'TaskController@acknowledgeTaskArrival');
 });
 
 // Tasks Bulk APIs

@@ -797,6 +797,78 @@
                     }
                 ]
             }
+        },
+        "/v1/tasks/acknowledge-task-arrival": {
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Driver Can Acknowledge Task Arrival",
+                "description": "Driver Can Acknowledge Task Arrival",
+                "operationId": "acknowledgeTaskArrival",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "formData",
+                        "description": "Task ID to acknowledge arrival",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Task Arrival"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed Operation",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
         }
     },
     "definitions": {
