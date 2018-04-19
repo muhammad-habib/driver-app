@@ -6,6 +6,7 @@ use App\Enums\Task\ATaskOperationType;
 use App\Enums\Task\ATaskStatus;
 use App\Events\Task\AcknowledgeTaskFailure;
 use App\Events\Task\AssignTask;
+use App\Events\Task\ReAssignTask;
 use App\Events\Task\RefuseTask;
 use App\Events\Task\DeliverTask;
 use App\Events\Task\StartTask;
@@ -461,6 +462,135 @@ class TaskController extends Controller
 
             return response()->json([
                 'message' => trans('task.assignTask.successfully'),
+            ], 200);
+
+        }catch (\Exception $e){
+            return ServerError::handle($e);
+        }
+    }
+
+    /**
+     * @author Muhammad Habib
+     * @api Reassign task to driver
+     * @since 19/04/2018
+     * @param Request $request
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+
+    /**
+     * @SWG\Post(
+     *     path="/v1/tasks/reassign-task",
+     *     summary="Admin Can Reassign task to driver",
+     *     tags={"Task"},
+     *     description="Admin Can Reassign task to driver",
+     *     operationId="ReassignTask",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="task_id",
+     *         in="formData",
+     *         description="Task ID to be reassigned",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="driver_id",
+     *         in="formData",
+     *         description="Driver ID to reassign",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Task is reassigned successfully"
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Failed Operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Fields are invalid",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="SERVER ERROR",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
+
+    public function ReassignTask(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'task_id' => 'required|numeric|exists:tasks,id',
+            'driver_id' => 'required|numeric|exists:drivers,id',
+        ]);
+
+        if ($validator->fails())
+            return ValidationError::handle($validator);
+
+        try{
+
+            // Get Task
+            $task = Task::query()->find($request->task_id);
+
+            //Get Driver
+            $driver = Driver::query()->find($request->driver_id);
+
+            //Check if Task Company is the same with Driver
+            if ($task->company_id != $driver->company_id)
+                return LogicalError::handle('task.reassignTask.invalidTaskDriver');
+
+            //Check if Driver is on duty
+            if (!$driver->on_duty)
+                return LogicalError::handle('task.reassignTask.invalidTaskDriver');
+
+            // Check Task to be in Ready Status
+            if ($task->task_status_id != ATaskStatus::READY)
+                return LogicalError::handle('task.reassignTask.invalidTaskStatus');
+
+            $task->driver_id = $request->driver_id;
+            $task->save();
+
+            // raise reassign Task event
+            event(new ReAssignTask($task));
+
+            return response()->json([
+                'message' => trans('task.reassignTask.successfully'),
             ], 200);
 
         }catch (\Exception $e){

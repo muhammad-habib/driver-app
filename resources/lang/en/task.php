@@ -22,4 +22,10 @@ return [
         'invalidTaskStatus'=>"Can't change task status",
         'successfully'=>"Task is assigned successfully"
     ],
+
+    'reassignTask' => [
+        'invalidTaskDriver'=>"Task Can't be reassigned to this driver",
+        'invalidTaskStatus'=>"Can't change task driver",
+        'successfully'=>"Task is reassigned successfully"
+    ],
 ];

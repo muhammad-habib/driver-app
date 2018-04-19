@@ -22,5 +22,10 @@ return [
         'invalidTaskStatus'=>"لا يمكن تغير حاله هذه المهمة",
         'successfully'=>"تم اسناد المهمة بنجاح",
     ],
+    'reassignTask' => [
+        'invalidTaskDriver'=>"لا يمكن اعادة اسناد المهمه لهذا السائق",
+        'invalidTaskStatus'=>"لا يمكن تغيير السائق",
+        'successfully'=>"تم اعادة اسناد المهمة بنجاح",
+    ],
 
 ];

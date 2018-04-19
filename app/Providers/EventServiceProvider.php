@@ -44,7 +44,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Task\NotifyAllWorkersForAssignTask',
             'App\Listeners\Task\WebHooks\SendWebHookForAssignTask',
         ],
-        
+
+        'App\Events\Task\ReAssignTask' => [
+            'App\Listeners\Task\NotifyAllWorkersForReAssignTask',
+            'App\Listeners\Task\WebHooks\SendWebHookForReAssignTask',
+        ],
     ];
 
     /**
