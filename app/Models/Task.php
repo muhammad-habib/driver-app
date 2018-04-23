@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Traits\Task\Assignable;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @SWG\Definition(type="object")
+ */
 class Task extends Model
 {
     use Assignable;
@@ -37,25 +40,105 @@ class Task extends Model
 
     ];
 
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $id;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $address;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $awb;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $lat;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $long;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $driver_id;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $bulk_id;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $company_id;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $customer_name;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $customer_phone;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $city;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $area;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $country;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $street_number;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $street_name;
+    /**
+     * @SWG\Property(format="date-time")
+     * @var string
+     */
     private $complete_after;
+    /**
+     * @SWG\Property(format="date-time")
+     * @var string
+     */
     private $complete_before;
+    /**
+     * @SWG\Property(format="string")
+     * @var string
+     */
     private $pick_up_address;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $pick_up_lat;
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
     private $pick_up_long;
 
     public function bulk()

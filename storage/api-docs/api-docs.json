@@ -869,6 +869,65 @@
                     }
                 ]
             }
+        },
+        "/v1/tasks/ready-tasks": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Driver Can see ready tasks",
+                "description": "Driver Can see ready tasks",
+                "operationId": "readyTasks",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "default": 200
+                                },
+                                "success": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Task"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
         }
     },
     "definitions": {
@@ -934,6 +993,91 @@
             "xml": {
                 "name": "Pet"
             }
+        },
+        "Task": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "address": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "awb": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "lat": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "long": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "driver_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "bulk_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "company_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "customer_name": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "customer_phone": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "city": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "area": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "country": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "street_number": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "street_name": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "complete_after": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "complete_before": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "pick_up_address": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "pick_up_lat": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pick_up_long": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "type": "object"
         },
         "User": {
             "properties": {
