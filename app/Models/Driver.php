@@ -12,7 +12,10 @@ class Driver extends Model
         'name',
         'awb',
         'company_id',
-        'active'
+        'active',
+        'username',
+        'password',
+        'token'
     ];
     private $name;
     private $awb;

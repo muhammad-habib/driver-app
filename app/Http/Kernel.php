@@ -59,5 +59,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'docs' => \App\Http\Middleware\Docs::class,
         'test' => \App\Http\Middleware\Test::class,
+        'lang' => \App\Http\Middleware\Language::class,
+        'auth.driver'=>\App\Http\Middleware\DriverAuth::class,
     ];
 }

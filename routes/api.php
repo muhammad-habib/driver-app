@@ -33,6 +33,22 @@ Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
     Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
 });
 
+// Driver Authentication
+Route::group(['middleware' => 'lang'], function () {
+    Route::group(['prefix' => 'driver'], function(){
+        Route::post('register', 'Driver\AuthController@register');
+        Route::post('login', 'Driver\AuthController@login');
+        Route::group(['middleware' => 'auth.driver'], function(){
+            Route::get('logout', 'Driver\AuthController@logout');
+            // Route::get('test', function(){
+            //     return 'passed';
+            // });
+        });    
+    });
+	
+});
+
+
 // Testing APIs
 Route::get('users', 'Pet@index');
 Route::middleware(['docs', 'test'])->get('users', 'Pet@index');
