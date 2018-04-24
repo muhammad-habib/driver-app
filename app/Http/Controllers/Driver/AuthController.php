@@ -93,7 +93,6 @@ class AuthController extends Controller
             'success' => true,
             'status' => 200,
             'token' =>  $driver->token,
-            'data' => $driver
         ]);
 
     }

@@ -41,9 +41,6 @@ Route::group(['middleware' => 'lang'], function () {
         Route::post('login', 'Driver\AuthController@login');
         Route::group(['middleware' => 'auth.driver'], function(){
             Route::get('logout', 'Driver\AuthController@logout');
-            // Route::get('test', function(){
-            //     return 'passed';
-            // });
         });    
     });
 	
