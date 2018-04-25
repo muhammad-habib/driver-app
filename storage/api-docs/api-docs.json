@@ -13,7 +13,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "localhost/captain/public",
+    "host": "127.0.0.1:8000",
     "basePath": "/api",
     "schemes": [
         "https"
@@ -69,6 +69,145 @@
                             "write:pets",
                             "read:pets"
                         ]
+                    }
+                ]
+            }
+        },
+        "/driver/login": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Driver Login",
+                "description": "Driver Login with Username and Password",
+                "operationId": "login",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "Driver Username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Driver Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns driver token",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "username and password are not correct",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
+        "/driver/logout": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Driver Logout",
+                "operationId": "logout",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Driver token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Driver Logged out successfully",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
                     }
                 ]
             }
@@ -934,13 +1073,16 @@
         "ApiResponse": {
             "properties": {
                 "code": {
+                    "description": "",
                     "type": "integer",
                     "format": "int32"
                 },
                 "type": {
+                    "description": "",
                     "type": "string"
                 },
                 "message": {
+                    "description": "",
                     "type": "string"
                 }
             },
@@ -953,15 +1095,20 @@
             ],
             "properties": {
                 "id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "name": {
+                    "description": "",
                     "type": "string",
                     "example": "doggie"
                 },
-                "category": {},
+                "category": {
+                    "description": ""
+                },
                 "photoUrls": {
+                    "description": "",
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -972,6 +1119,7 @@
                     }
                 },
                 "tags": {
+                    "description": "",
                     "type": "array",
                     "items": {},
                     "xml": {
@@ -980,7 +1128,7 @@
                     }
                 },
                 "status": {
-                    "description": "pet status in the store",
+                    "description": "",
                     "type": "string",
                     "enum": [
                         "available",
@@ -997,82 +1145,102 @@
         "Task": {
             "properties": {
                 "id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "address": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "awb": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "lat": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "long": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "driver_id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "bulk_id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "company_id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "customer_name": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "customer_phone": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "city": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "area": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "country": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "street_number": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "street_name": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "complete_after": {
+                    "description": "",
                     "type": "string",
                     "format": "date-time"
                 },
                 "complete_before": {
+                    "description": "",
                     "type": "string",
                     "format": "date-time"
                 },
                 "pick_up_address": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "pick_up_lat": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "pick_up_long": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 }
@@ -1082,14 +1250,17 @@
         "User": {
             "properties": {
                 "id": {
+                    "description": "",
                     "type": "integer",
                     "format": "int64"
                 },
                 "name": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 },
                 "email": {
+                    "description": "",
                     "type": "string",
                     "format": "string"
                 }
