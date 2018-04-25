@@ -713,4 +713,85 @@ class TaskController extends Controller
             return ServerError::handle($e);
         }
     }
+
+    /**
+     * @author Muhammad Habib
+     * @api  Get Current Tasks
+     * @since 23/04/2018
+     * @param Request $request
+     * @version 1.0
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+     * @SWG\Get(
+     *     path="/v1/tasks/ready-tasks",
+     *     summary="Driver Can see ready tasks",
+     *     tags={"Task"},
+     *     description="Driver Can see ready tasks",
+     *     operationId="readyTasks",
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="status",
+     *                      type="string",
+     *                      default=200
+     *                  ),
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=true
+     *                  ),
+     *              @SWG\Property(
+     *                      type="array",
+     *                      property="data",
+     *                      @SWG\Items(ref="#/definitions/Task")
+     *                  ),
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="SERVER ERROR",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
+
+    public function readyTasks(Request $request)
+    {
+        try {
+            //Get Driver
+            $driver = Driver::query()->find(1);
+            return response()->json([
+                'success' => true,
+                'status' => 200,
+                'data'=>$driver->readyTasks,
+            ]);
+        }catch (\Exception $e){
+            return ServerError::handle($e);
+        }
+
+
+    }
 }

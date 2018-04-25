@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Task\ATaskStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Driver extends Model
@@ -12,7 +13,10 @@ class Driver extends Model
         'name',
         'awb',
         'company_id',
-        'active'
+        'active',
+        'username',
+        'password',
+        'token'
     ];
     private $name;
     private $awb;
@@ -22,5 +26,10 @@ class Driver extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function readyTasks()
+    {
+        return $this->hasMany(Task::class)->where('task_status_id', '=', ATaskStatus::READY);
     }
 }

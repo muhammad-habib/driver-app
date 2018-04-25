@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
     Route::post('assign-task', 'TaskController@assignTask');
     Route::post('reassign-task', 'TaskController@ReassignTask');
     Route::post('acknowledge-task-arrival', 'TaskController@acknowledgeTaskArrival');
+    Route::get('ready-tasks', 'TaskController@readyTasks');
 });
 
 // Tasks Bulk APIs
@@ -36,6 +37,19 @@ Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
 Route::group(['prefix' => 'profile', 'namespace' => 'Profile'], function () {
     Route::get('/tasks-history', 'TasksHistoryController@getTasksHistory');
 });
+
+// Driver Authentication
+Route::group(['middleware' => 'lang'], function () {
+    Route::group(['prefix' => 'driver'], function(){
+        Route::post('register', 'Driver\AuthController@register');
+        Route::post('login', 'Driver\AuthController@login');
+        Route::group(['middleware' => 'auth.driver'], function(){
+            Route::get('logout', 'Driver\AuthController@logout');
+        });    
+    });
+	
+});
+
 
 // Testing APIs
 Route::get('users', 'Pet@index');
