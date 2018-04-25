@@ -32,6 +32,10 @@ Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
 Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
     Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
 });
+// Driver Profile APIs
+Route::group(['prefix' => 'profile', 'namespace' => 'Profile'], function () {
+    Route::get('/tasks-history', 'TasksHistoryController@getTasksHistory');
+});
 
 // Testing APIs
 Route::get('users', 'Pet@index');
