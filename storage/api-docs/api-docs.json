@@ -212,6 +212,104 @@
                 ]
             }
         },
+
+        "/profile/tasks-history": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "Driver Tasks' History",
+                "operationId": "tasks history",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "formData",
+                        "description": "Driver id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "properties": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "default": 200
+                                    },
+                                    "success": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "data": {
+                                        "type": "array"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "driver hasn't tasks history",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "driver hasn't tasks history"
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "default": 401
+                                },
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    },
+
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
+
         "/users": {
             "get": {
                 "tags": [

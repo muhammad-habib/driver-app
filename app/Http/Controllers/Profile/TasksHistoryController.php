@@ -29,6 +29,77 @@ class TasksHistoryController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
+    /**
+     * @SWG\Get(
+     *     path="/profile/tasks-history",
+     *     summary="Driver Tasks' History",
+     *     tags={"Driver"},
+     *     description="get all tasks' history for each driver",
+     *     operationId="tasks' history",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="driver_id",
+     *         in="formData",
+     *         description="Driver ID",
+     *         required=true,
+     *         type="integer",
+     *     )
+     *     @SWG\Response(
+     *         response=200,
+     *         description="tasks history",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="data",
+     *                      type="array",
+     *              )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Validation Errors",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Fields are invalid",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="driver hasn't tasks' history",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *              )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="500",
+     *         description="SERVER ERROR",
+     *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="message",
+     *                      type="string",
+     *                      default="Server Error",
+     *              ),
+     *              @SWG\Property(
+     *                      property="details",
+     *                      type="string",
+     *              )
+     *         )
+     *     ),
+     *     security={
+     *       {"default": {}}
+     *     }
+     * )
+     */
+
   public function getTasksHistory(Request $request)
   {
       $validator = Validator::make($request->all(), [
@@ -47,7 +118,7 @@ class TasksHistoryController extends Controller
           if(!$tasksHistory){
               return response()->json([
                   'success'=> false,
-                  'status'=> 400,
+                  'status'=> 401,
                   'message'=>trans('profile.tasksHistory.error')
 
               ]);
@@ -56,7 +127,7 @@ class TasksHistoryController extends Controller
           return response()->json([
               'success'=> true,
               'status'=> 200,
-              'tasks_history'=>$tasksHistory
+              'data'=>$tasksHistory
 
           ]);
 
