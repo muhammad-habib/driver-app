@@ -13,10 +13,10 @@
         },
         "version": "1.0.0"
     },
-    "host": "127.0.0.1:8000",
+    "host": "captain.test",
     "basePath": "/api",
     "schemes": [
-        "https"
+        "http"
     ],
     "paths": {
         "/tasks-bulk/createUnAssignedBulkOfTasks": {
@@ -212,104 +212,6 @@
                 ]
             }
         },
-
-        "/profile/tasks-history": {
-            "get": {
-                "tags": [
-                    "Driver"
-                ],
-                "summary": "Driver Tasks' History",
-                "operationId": "tasks history",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "driver_id",
-                        "in": "formData",
-                        "description": "Driver id",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "properties": {
-                                "properties": {
-                                    "status": {
-                                        "type": "string",
-                                        "default": 200
-                                    },
-                                    "success": {
-                                        "type": "boolean",
-                                        "default": true
-                                    },
-                                    "data": {
-                                        "type": "array"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation Errors",
-                        "schema": {
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "default": "Fields are invalid"
-                                },
-                                "details": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "driver hasn't tasks history",
-                        "schema": {
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "default": "driver hasn't tasks history"
-                                },
-                                "status": {
-                                    "type": "string",
-                                    "default": 401
-                                },
-                                "success": {
-                                    "type": "boolean",
-                                    "default": false
-                                }
-                            }
-                        }
-                    },
-
-                    "500": {
-                        "description": "SERVER ERROR",
-                        "schema": {
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "default": "Server Error"
-                                },
-                                "details": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "default": []
-                    }
-                ]
-            }
-        },
-
         "/users": {
             "get": {
                 "tags": [
@@ -729,6 +631,91 @@
                             "read:pets",
                             "write:pets"
                         ]
+                    }
+                ]
+            }
+        },
+        "/profile/tasks-history": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Driver Tasks' History",
+                "description": "get all tasks' history for each driver",
+                "operationId": "getTasksHistory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "formData",
+                        "description": "Driver ID",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "tasks history",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Task"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "driver hasn't tasks' history",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
                     }
                 ]
             }

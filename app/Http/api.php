@@ -2,7 +2,7 @@
 define("API_HOST",  config('l5-swagger.constants.L5_SWAGGER_CONST_HOST'));
 /**
  * @SWG\Swagger(
- *     schemes={"https"},
+ *     schemes={"http"},
  *     host=L5_SWAGGER_CONST_HOST,
  *     basePath="/api",
  *     @SWG\Info(

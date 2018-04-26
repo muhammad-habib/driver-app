@@ -33,9 +33,9 @@ class TasksHistoryController extends Controller
      * @SWG\Get(
      *     path="/profile/tasks-history",
      *     summary="Driver Tasks' History",
-     *     tags={"Driver"},
+     *     tags={"Profile"},
      *     description="get all tasks' history for each driver",
-     *     operationId="tasks' history",
+     *     operationId="getTasksHistory",
      *     produces={"application/json"},
      *     @SWG\Parameter(
      *         name="driver_id",
@@ -43,7 +43,8 @@ class TasksHistoryController extends Controller
      *         description="Driver ID",
      *         required=true,
      *         type="integer",
-     *     )
+     *         format="int64"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="tasks history",
@@ -51,6 +52,7 @@ class TasksHistoryController extends Controller
      *              @SWG\Property(
      *                      property="data",
      *                      type="array",
+     *                      @SWG\Items(ref="#/definitions/Task")
      *              )
      *         )
      *     ),
@@ -83,6 +85,11 @@ class TasksHistoryController extends Controller
      *         response="500",
      *         description="SERVER ERROR",
      *         @SWG\Schema(
+     *              @SWG\Property(
+     *                      property="success",
+     *                      type="boolean",
+     *                      default=false
+     *              ),
      *              @SWG\Property(
      *                      property="message",
      *                      type="string",
