@@ -649,11 +649,10 @@
                 "parameters": [
                     {
                         "name": "driver_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Driver ID",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -662,10 +661,7 @@
                         "schema": {
                             "properties": {
                                 "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Task"
-                                    }
+                                    "type": "string"
                                 }
                             }
                         }

@@ -39,11 +39,10 @@ class TasksHistoryController extends Controller
      *     produces={"application/json"},
      *     @SWG\Parameter(
      *         name="driver_id",
-     *         in="formData",
+     *         in="query",
      *         description="Driver ID",
      *         required=true,
      *         type="integer",
-     *         format="int64"
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -51,8 +50,7 @@ class TasksHistoryController extends Controller
      *         @SWG\Schema(
      *              @SWG\Property(
      *                      property="data",
-     *                      type="array",
-     *                      @SWG\Items(ref="#/definitions/Task")
+     *                      type="string"
      *              )
      *         )
      *     ),
