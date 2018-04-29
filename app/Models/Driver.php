@@ -16,7 +16,9 @@ class Driver extends Model
         'active',
         'username',
         'password',
-        'token'
+        'token',
+        'mobile',
+        'image'
     ];
     private $name;
     private $awb;

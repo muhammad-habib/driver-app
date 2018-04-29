@@ -9,9 +9,10 @@
 return [
     'tasksHistory' => [
         'error'=>"Driver hasn't Tasks' History"
+    ],
+    'info' => [
+    	'error' => 'Driver Profile Does not found',
+    	'success' => 'Driver Profile found success',
+    	'updated' => 'Driver Profile updated successfully'
     ]
-
-
-
-
 ];

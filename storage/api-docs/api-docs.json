@@ -13,70 +13,16 @@
         },
         "version": "1.0.0"
     },
-    "host": "captain.test",
+    "host": "127.0.0.1:8000",
     "basePath": "/api",
     "schemes": [
         "http"
     ],
     "paths": {
-        "/tasks-bulk/createUnAssignedBulkOfTasks": {
+        "/login": {
             "post": {
                 "tags": [
-                    "bulk"
-                ],
-                "summary": "create un assigned bulk of tasks",
-                "description": "Multiple status values can be provided with comma separated strings",
-                "operationId": "createUnAssignedBulkOfTasks",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tasks",
-                        "in": "query",
-                        "description": "",
-                        "required": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "default": "available",
-                            "enum": [
-                                "available",
-                                "pending",
-                                "sold"
-                            ]
-                        },
-                        "collectionFormat": "multi"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Pet"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value"
-                    }
-                },
-                "security": [
-                    {
-                        "petstore_auth": [
-                            "write:pets",
-                            "read:pets"
-                        ]
-                    }
-                ]
-            }
-        },
-        "/driver/login": {
-            "post": {
-                "tags": [
-                    "Driver"
+                    "Driver Auth"
                 ],
                 "summary": "Driver Login",
                 "description": "Driver Login with Username and Password",
@@ -160,10 +106,10 @@
                 ]
             }
         },
-        "/driver/logout": {
+        "/logout": {
             "post": {
                 "tags": [
-                    "Driver"
+                    "Driver Auth"
                 ],
                 "summary": "Driver Logout",
                 "operationId": "logout",
@@ -208,6 +154,60 @@
                 "security": [
                     {
                         "default": []
+                    }
+                ]
+            }
+        },
+        "/tasks-bulk/createUnAssignedBulkOfTasks": {
+            "post": {
+                "tags": [
+                    "bulk"
+                ],
+                "summary": "create un assigned bulk of tasks",
+                "description": "Multiple status values can be provided with comma separated strings",
+                "operationId": "createUnAssignedBulkOfTasks",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tasks",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "available",
+                            "enum": [
+                                "available",
+                                "pending",
+                                "sold"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Pet"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
                     }
                 ]
             }
@@ -631,6 +631,195 @@
                             "read:pets",
                             "write:pets"
                         ]
+                    }
+                ]
+            }
+        },
+        "/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Driver Profile",
+                "description": "Get driver profile information",
+                "operationId": "edit",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "driver_id",
+                        "in": "query",
+                        "description": "Driver ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns success message",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Driver not found",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
+        "/profile/edit": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Driver Profile",
+                "description": "Update Driver Profile Info",
+                "operationId": "edit",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "formData",
+                        "description": "Driver ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Driver Name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "Driver Username",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "Driver Image",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mobile",
+                        "in": "formData",
+                        "description": "Driver Mobile",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns success message",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Driver not found",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
                     }
                 ]
             }
