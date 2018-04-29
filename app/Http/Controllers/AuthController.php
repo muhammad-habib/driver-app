@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Driver;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Log\ServerError;
@@ -47,9 +47,9 @@ class AuthController extends Controller
 
     /**
      * @SWG\Post(
-     *     path="/driver/login",
+     *     path="/login",
      *     summary="Driver Login",
-     *     tags={"Driver"},
+     *     tags={"Driver Auth"},
      *     description="Driver Login with Username and Password",
      *     operationId="login",
      *     produces={"application/json"},
@@ -148,7 +148,7 @@ class AuthController extends Controller
             // return failed message if driver doesn't exist
             if(!$driver){
                 return response()->json([
-                    'message' => trans('driver.login.error.username')
+                    'message' => trans('driver_auth.login.error.username')
                 ], 401);
             }
 
@@ -156,7 +156,7 @@ class AuthController extends Controller
             if (!Hash::check($request->get('password'), $driver->password))
             {
                 return response()->json([
-                    'message' => trans('driver.login.error.password')
+                    'message' => trans('driver_auth.login.error.password')
                 ], 401);
             }
             
@@ -171,7 +171,7 @@ class AuthController extends Controller
 
             // return driver token
             return response()->json([
-                'message' => trans('driver.login.success'),
+                'message' => trans('driver_auth.login.success'),
                 'data' =>  $driver->token,
             ], 200);
 
@@ -190,11 +190,11 @@ class AuthController extends Controller
     *   @return Json
     */
 
-        /**
-     * @SWG\Post(
-     *     path="/driver/logout",
+    /**
+     * @SWG\Get(
+     *     path="/logout",
      *     summary="Driver Logout",
-     *     tags={"Driver"},
+     *     tags={"Driver Auth"},
      *     operationId="logout",
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -243,7 +243,7 @@ class AuthController extends Controller
             Driver::where('token', $token)->update(['token' => null]);
             
             return response()->json([
-                'message' => trans('driver.logout_success')
+                'message' => trans('driver_auth.logout_success')
             ], 200);
 
         }catch (\Exception $e){
