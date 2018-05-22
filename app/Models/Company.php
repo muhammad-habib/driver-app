@@ -28,4 +28,11 @@ class Company extends Model
         return $this->hasMany(Bulk::class);
     }
 
+    public function webhooks()
+    {
+        return $this->belongsToMany('App\Models\Webhook', 'company_webhook', 'company_id', 'webhook_id')
+                    ->withPivot('url', 'code')
+                    ->withTimestamps();
+    }
+
 }
