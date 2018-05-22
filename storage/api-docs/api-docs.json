@@ -212,6 +212,89 @@
                 ]
             }
         },
+        "/webhooks": {
+            "post": {
+                "tags": [
+                    "Company"
+                ],
+                "description": "Add webhook to comapny",
+                "operationId": "addWebhook",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "url",
+                        "in": "formData",
+                        "description": "Webhook url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Webhook code",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "formData",
+                        "description": "Company ID. Later we may will not need this field, it may replaced by company authentication key",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns success message",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Errors",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Fields are invalid"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
