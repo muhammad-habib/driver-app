@@ -914,6 +914,138 @@
                 ]
             }
         },
+        "/start-shift": {
+            "get": {
+                "tags": [
+                    "Shift"
+                ],
+                "description": "Start driver shift: make him in duty and capture start date",
+                "operationId": "startShift",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns success message",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Driver did not started shift yet or his shift already ended"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
+        "/end-shift": {
+            "get": {
+                "tags": [
+                    "Shift"
+                ],
+                "description": "End driver shift: make him off duty and capture end date",
+                "operationId": "endShift",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation returns success message",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Driver in duty or his shift ended"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "SERVER ERROR",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "default": "Server Error"
+                                },
+                                "details": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "default": []
+                    }
+                ]
+            }
+        },
         "/profile/tasks-history": {
             "get": {
                 "tags": [
