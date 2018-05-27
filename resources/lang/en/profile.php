@@ -18,7 +18,7 @@ return [
     'shift' => [
     	'start' => 'Shift Started',
     	'end' => 'Shift Ends',
-    	'error_not_started' => 'Driver did not started shift yet or his shift already ended',
+    	'not_started' => 'Driver did not started shift yet or his shift already ended',
     	'already_started' => 'Driver in duty or his shift ended'
     ]
 ];

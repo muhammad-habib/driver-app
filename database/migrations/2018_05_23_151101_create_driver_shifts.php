@@ -16,7 +16,9 @@ class CreateDriverShifts extends Migration
         Schema::create('driver_shifts', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('driver_id')->unsigned()->index();      
+            $table->integer('driver_id')->unsigned()->index();
+            $table->foreign('driver_id')->references('id')->on('drivers');
+
             $table->time('start_at');
             $table->time('end_at')->nullable();
 

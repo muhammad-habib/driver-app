@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Profile;
+namespace App\Http\Controllers\DriverApp\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Log\ServerError;
@@ -23,7 +23,7 @@ class ProfileController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/profile",
+     *     path="/v1/profile",
      *     summary="Driver Profile",
      *     tags={"Profile"},
      *     description="Get driver profile information",
@@ -146,7 +146,7 @@ class ProfileController extends Controller
 
     /**
      * @SWG\Post(
-     *     path="/profile/edit",
+     *     path="/v1/profile/edit",
      *     summary="Update Driver Profile",
      *     tags={"Profile"},
      *     description="Update Driver Profile Info",

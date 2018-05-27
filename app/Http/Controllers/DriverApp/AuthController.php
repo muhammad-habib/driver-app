@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DriverApp;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Log\ServerError;
@@ -26,7 +26,7 @@ class AuthController extends Controller
     		'name' => $request->get('name'),
     		'awb' => $request->get('awb'),
     		'company_id' => $request->get('company_id'),
-           	'username' => $request->get('username'),
+           	'user_name' => $request->get('user_name'),
            	'password' => Hash::make($request->get('password')),
         ]);
         
@@ -47,14 +47,14 @@ class AuthController extends Controller
 
     /**
      * @SWG\Post(
-     *     path="/login",
+     *     path="/v1/login",
      *     summary="Driver Login",
      *     tags={"Driver Auth"},
      *     description="Driver Login with Username and Password",
      *     operationId="login",
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="username",
+     *         name="user_name",
      *         in="formData",
      *         description="Driver Username",
      *         required=true,
@@ -131,7 +131,7 @@ class AuthController extends Controller
 
     	// check input validation
         $validator = Validator::make($request->all(), [
-            'username' => 'required',
+            'user_name' => 'required',
             'password' => 'required'
         ]);
         
@@ -142,13 +142,13 @@ class AuthController extends Controller
         
         try{
 
-            // get driver from database from it's username
-            $driver = Driver::where('username',  $request->get('username'))->first();
+            // get driver
+            $driver = Driver::where('user_name',  $request->get('user_name'))->first();
 
             // return failed message if driver doesn't exist
             if(!$driver){
                 return response()->json([
-                    'message' => trans('driver_auth.login.error.username')
+                    'message' => trans('driver_auth.login.error.user_name')
                 ], 401);
             }
 
@@ -165,7 +165,7 @@ class AuthController extends Controller
             $payload = JWTFactory::make($customClaims);
             $token = JWTAuth::encode($payload);
 
-            // store token in db
+            // store token
             $driver->token = $token->get();
             $driver->save();
 
@@ -192,7 +192,7 @@ class AuthController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/logout",
+     *     path="/v1/logout",
      *     summary="Driver Logout",
      *     tags={"Driver Auth"},
      *     operationId="logout",

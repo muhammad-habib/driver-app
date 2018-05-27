@@ -8,7 +8,7 @@
 
 
 
-namespace App\Http\Controllers\Profile;
+namespace App\Http\Controllers\DriverApp\Profile;
 
 use App\Lib\Log\ServerError;
 use App\Lib\Log\ValidationError;
@@ -31,7 +31,7 @@ class TasksHistoryController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/profile/tasks-history",
+     *     path="/v1/profile/tasks-history",
      *     summary="Driver Tasks' History",
      *     tags={"Profile"},
      *     description="get all tasks' history for each driver",

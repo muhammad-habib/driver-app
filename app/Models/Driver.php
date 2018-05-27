@@ -14,7 +14,7 @@ class Driver extends Model
         'awb',
         'company_id',
         'active',
-        'username',
+        'user_name',
         'password',
         'token',
         'mobile',

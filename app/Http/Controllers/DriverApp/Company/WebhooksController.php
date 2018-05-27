@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Company;
+namespace App\Http\Controllers\DriverApp\Company;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Log\ServerError;
@@ -15,7 +15,7 @@ class WebhooksController extends Controller
     
     /**
      * @SWG\Post(
-     *     path="/webhooks",
+     *     path="v1/webhooks",
      *     tags={"Company"},
      *     description="Add webhook to comapny",
      *     operationId="addWebhook",
@@ -118,12 +118,9 @@ class WebhooksController extends Controller
 				)
 			);
 
-			$company_webhook =  $company->webhooks->where('code', $request->code)->first();
-
 			// return success
 			return response()->json([
 			    'message' => trans('company.webhooks.success'),
-			    'data' => $company_webhook->pivot
 			], 200);
 
 		}catch (\Exception $e){

@@ -16,9 +16,11 @@ class CreateTableCompanyWebhoook extends Migration
         Schema::create('company_webhook', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('company_id')->unsigned()->index();      
+            $table->integer('company_id')->unsigned()->index();
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->integer('webhook_id')->unsigned()->index();
-
+            $table->foreign('webhook_id')->references('id')->on('webhooks');
+            
             $table->string('url');
             $table->integer('code');
 
@@ -33,6 +35,6 @@ class CreateTableCompanyWebhoook extends Migration
      */
     public function down()
     {
-       Schema::dropIfExists('webhooks');
+       Schema::dropIfExists('company_webhook');
     }
 }

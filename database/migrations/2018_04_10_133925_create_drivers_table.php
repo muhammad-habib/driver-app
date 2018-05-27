@@ -15,15 +15,18 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-
-            // the delivery service ID
-            $table->string('awb')->index();
+            $table->string('name')->nullable();
+            $table->string('user_name');
+            $table->string('password');
+            $table->string('token', 1000)->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('image')->nullable();
+            $table->string('awb')->index()->nullable(); // the delivery service ID
+            $table->boolean('active')->default(true)->index();
 
             // the company relationship -> Company (1) to (*) Driver
-            $table->unsignedInteger('company_id');
-
-            $table->boolean('active')->default(true)->index();
+            $table->unsignedInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies');
 
             $table->timestamps();
         });

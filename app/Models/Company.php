@@ -30,7 +30,7 @@ class Company extends Model
 
     public function webhooks()
     {
-        return $this->belongsToMany('App\Models\Webhook', 'company_webhook', 'company_id', 'webhook_id')
+        return $this->belongsToMany(Webhook::class, 'company_webhook', 'company_id', 'webhook_id')
                     ->withPivot('url', 'code')
                     ->withTimestamps();
     }

@@ -14,7 +14,6 @@ $factory->define(\App\Models\Driver::class, function (Faker $faker) {
         "name" => $faker->name(),
         "awb" => $faker->biasedNumberBetween(),
         "active" => true,
-        "on_duty" => false,
         "company_id" => 1
     ];
 });

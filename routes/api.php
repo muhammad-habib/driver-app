@@ -17,7 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'lang'], function () { // Langauge Detection
+
+Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
     
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
@@ -38,7 +39,7 @@ Route::group(['middleware' => 'lang'], function () { // Langauge Detection
         });
 
         // Tasks APIs
-        Route::group(['prefix' => 'v1/tasks', 'namespace' => 'Task'], function (){
+        Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function (){
             Route::post('start-task', 'TaskController@startTask');
             Route::post('deliver-task', 'TaskController@deliverTask');
             Route::post('refuse-task', 'TaskController@refuseTask');
@@ -54,7 +55,6 @@ Route::group(['middleware' => 'lang'], function () { // Langauge Detection
             Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
         });
 
-
     });
 
     // Company APIs
@@ -62,8 +62,9 @@ Route::group(['middleware' => 'lang'], function () { // Langauge Detection
         Route::post('webhooks', 'WebhooksController@addWebhook'); // Add web hook for company
     });
     
-    
 });
+
+
 
 // Testing APIs
 Route::get('users', 'Pet@index');

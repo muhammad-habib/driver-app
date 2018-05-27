@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Task;
+namespace App\Http\Controllers\DriverApp\Task;
 
 use App\Enums\Task\ATaskOperationType;
 use App\Enums\Task\ATaskStatus;

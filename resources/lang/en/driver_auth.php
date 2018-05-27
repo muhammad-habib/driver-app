@@ -3,7 +3,7 @@
 return [
 	'login' => [
 		'error' => [
-			'username' => 'Driver does not exist in our records',
+			'user_name' => 'Driver does not exist in our records',
 			'password' => 'Username and Password does not match'
 		],
 		'success' => 'Driver login success'

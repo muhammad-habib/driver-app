@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Bulk;
+namespace App\Http\Controllers\DriverApp\Bulk;
 
 use App\Events\Bulk\CreatedUnAssignedBulk;
 use App\Lib\Log\ServerError;
@@ -15,7 +15,7 @@ class TasksBulkController extends Controller
 
     /**
      * @SWG\Post(
-     *     path="/tasks-bulk/createUnAssignedBulkOfTasks",
+     *     path="/v1/tasks-bulk/createUnAssignedBulkOfTasks",
      *     summary="create un assigned bulk of tasks",
      *     description="Multiple status values can be provided with comma separated strings",
      *     operationId="createUnAssignedBulkOfTasks",

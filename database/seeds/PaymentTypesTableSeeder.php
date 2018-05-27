@@ -14,7 +14,7 @@ class PaymentTypesTableSeeder extends Seeder
     public function run()
     {
         // Insert some stuff
-        DB::table('payment_type')->insert([
+        DB::table('payment_types')->insert([
             array(
                 'title_ar' => 'كاش',
                 'title_en' => 'Cash',

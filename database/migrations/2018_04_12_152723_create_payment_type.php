@@ -14,7 +14,7 @@ class CreatePaymentType extends Migration
     public function up()
     {
         //
-        Schema::create('payment_type', function (Blueprint $table) {
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('title_ar');
@@ -24,6 +24,7 @@ class CreatePaymentType extends Migration
 
             // the company relationship -> Company (1) to (*) Task
             $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
 
             $table->timestamps();
 

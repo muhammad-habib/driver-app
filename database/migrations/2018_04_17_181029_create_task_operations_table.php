@@ -22,9 +22,10 @@ class CreateTaskOperationsTable extends Migration
 
             // the task_operation_type relationship -> TaskOperationType (1) to (*) TaskOperation
             $table->unsignedInteger('operation_type_id');
-
+            $table->foreign('operation_type_id')->references('id')->on('task_operation_types');
             // the task relationship -> Task (1) to (*) TaskOperation
             $table->unsignedInteger('task_id');
+            $table->foreign('task_id')->references('id')->on('tasks');
 
             $table->timestamps();
         });
