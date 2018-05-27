@@ -14,5 +14,11 @@ return [
     	'error' => 'Driver Profile Does not found',
     	'success' => 'Driver Profile found success',
     	'updated' => 'Driver Profile updated successfully'
+    ],
+    'shift' => [
+    	'start' => 'Shift Started',
+    	'end' => 'Shift Ends',
+    	'error_not_started' => 'Driver did not started shift yet or his shift already ended',
+    	'already_started' => 'Driver in duty or his shift ended'
     ]
 ];

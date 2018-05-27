@@ -25,10 +25,16 @@ Route::group(['middleware' => 'lang'], function () { // Langauge Detection
         Route::get('logout', 'AuthController@logout');
         
         // Driver Profile APIs
-        Route::group(['prefix' => 'profile', 'namespace' => 'Profile'], function () {
-            Route::get('/', 'ProfileController@index');
-            Route::post('/edit', 'ProfileController@edit');
-            Route::get('/tasks-history', 'TasksHistoryController@getTasksHistory');
+        Route::group(['namespace' => 'Profile'], function () {
+            Route::group(['prefix' => 'profile'], function(){
+                Route::get('/', 'ProfileController@index');
+                Route::post('/edit', 'ProfileController@edit');
+                Route::get('/tasks-history', 'TasksHistoryController@getTasksHistory');
+            });
+
+            // Driver start & end shift
+            Route::get('start-shift', 'ShiftsController@startShift');
+            Route::get('end-shift', 'ShiftsController@endShift');
         });
 
         // Tasks APIs
@@ -47,6 +53,7 @@ Route::group(['middleware' => 'lang'], function () { // Langauge Detection
         Route::group(['prefix' => 'tasks-bulk', 'namespace' => 'Bulk'], function () {
             Route::post('/', 'TasksBulkController@createUnAssignedBulkOfTasks');
         });
+
 
     });
 
