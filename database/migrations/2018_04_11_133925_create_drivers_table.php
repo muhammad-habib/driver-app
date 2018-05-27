@@ -25,8 +25,6 @@ class CreateDriversTable extends Migration
 
             $table->boolean('active')->default(true)->index();
 
-            $table->boolean('on_duty')->default(false)->index();
-
             $table->timestamps();
         });
     }
