@@ -34,4 +34,9 @@ class Driver extends Model
     {
         return $this->hasMany(Task::class)->where('task_status_id', '=', ATaskStatus::READY);
     }
+
+    public function shifts()
+    {
+        return $this->hasMany(DriverShift::class);
+    }
 }

@@ -92,15 +92,11 @@ class ShiftsController extends Controller
         }
 
 		try{
-		  	
-		  	$driver_shift = DriverShift::where('driver_id', $request->driver_id)
-		  					->whereDate('created_at', '=', Carbon::today()->toDateString())
-		  					->first();
 
 		  	$driver = Driver::find($request->driver_id)->first();
 
             // make sure driver not started shift yet
-		  	if( $driver->in_duty == 0 && !$driver_shift ){
+		  	if( $driver->in_duty == 0 ){
 
 		  		// set driver in duty
 				$driver->in_duty = 1;
@@ -203,6 +199,9 @@ class ShiftsController extends Controller
 		  	
 		  	$driver_shift = DriverShift::where('driver_id', $request->driver_id)
 		  					->whereDate('created_at', '=', Carbon::today()->toDateString())
+                            ->whereNotNull('start_at')
+                            ->whereNull('end_at')
+                            ->orderBy('start_at', 'DESC')
 		  					->first();
 
             $driver = Driver::find($request->driver_id)->first();
