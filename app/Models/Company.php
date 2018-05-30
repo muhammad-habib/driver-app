@@ -35,4 +35,9 @@ class Company extends Model
                     ->withTimestamps();
     }
 
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'company_id');
+    }
+
 }

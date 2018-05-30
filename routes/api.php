@@ -64,6 +64,16 @@ Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lan
     
 });
 
+Route::group(['prefix' => 'v1', 'namespace' => 'Portal', 'middleware' => 'lang'], function (){
+
+    Route::group(['prefix' => 'teams', 'namespace' => 'Team'], function (){
+        Route::get('/', 'TeamController@teams');
+        Route::post('/', 'TeamController@createTeam');
+        Route::put('/{team_id}', 'TeamController@updateTeam');
+        Route::delete('/{team_id}', 'TeamController@deleteTeam');
+    });
+});
+
 
 
 // Testing APIs

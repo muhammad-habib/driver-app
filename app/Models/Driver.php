@@ -39,4 +39,9 @@ class Driver extends Model
     {
         return $this->hasMany(DriverShift::class);
     }
+
+    public function teams()
+    {
+        $this->belongsToMany(Team::class, 'driver_team', 'driver_id', 'team_id');
+    }
 }
