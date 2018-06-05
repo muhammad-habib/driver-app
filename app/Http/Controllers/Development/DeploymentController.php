@@ -18,6 +18,7 @@ class DeploymentController extends Controller
      */
     public function pullDevelopmentBranch(Request $request)
     {
+        var_dump('1');
         $validator = Validator::make($request->all(), [
             "commandId" => "required|string",
             "push" => "required|array",
