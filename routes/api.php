@@ -80,7 +80,7 @@ Route::group(['namespace' => 'Portal', 'middleware' => 'lang'], function (){
 });
 
 
-
+Route::post('/push-repo', 'Development\DeploymentController@pullDevelopmentBranch');
 // Testing APIs
 Route::get('users', 'Pet@index');
 Route::middleware(['docs', 'test'])->get('users', 'Pet@index');
