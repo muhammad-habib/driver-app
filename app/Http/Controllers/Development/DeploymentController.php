@@ -47,7 +47,7 @@ class DeploymentController extends Controller
             }
             return response()->json([$output]);
         } else {
-            return null;
+            return "non";
         }
     }
 }
