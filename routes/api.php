@@ -84,6 +84,6 @@ Route::post('/push-repo', 'Development\DeploymentController@pullDevelopmentBranc
 // Testing APIs
 Route::get('users', 'Pet@index');
 Route::middleware(['docs', 'test'])->get('users', 'Pet@index');
-Route::get('test-d1', function () {
+Route::get('test-d', function () {
     return 123;
 });
