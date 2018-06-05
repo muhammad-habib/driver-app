@@ -57,20 +57,25 @@ Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lan
 
     });
 
-    // Company APIs
-    Route::group(['namespace' => 'Company'], function(){
-        Route::post('webhooks', 'WebhooksController@addWebhook'); // Add web hook for company
-    });
     
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'Portal', 'middleware' => 'lang'], function (){
+Route::group(['namespace' => 'Portal', 'middleware' => 'lang'], function (){
 
-    Route::group(['prefix' => 'teams', 'namespace' => 'Team'], function (){
+    // teams APIs
+    Route::group(['prefix' => 'v1/teams', 'namespace' => 'Team'], function (){
         Route::get('/', 'TeamController@teams');
         Route::post('/', 'TeamController@createTeam');
         Route::put('/{team_id}', 'TeamController@updateTeam');
         Route::delete('/{team_id}', 'TeamController@deleteTeam');
+    });
+
+    // company APIs
+    Route::group(['prefix' => 'v1/webhooks', 'namespace' => 'Company'], function(){
+        Route::get('/', 'WebhooksController@webhooks');
+        Route::post('/', 'WebhooksController@addWebhook');
+        Route::put('/{webhook_id}', 'WebhooksController@updateWebhook');
+        Route::delete('/{webhook_id}', 'WebhooksController@deleteWebhook');
     });
 });
 
