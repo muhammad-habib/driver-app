@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Development;
 
+use App\Notifications\Deploy;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Process\Process;
 
@@ -46,9 +49,12 @@ class DeploymentController extends Controller
                 });
 
             }
-            return response()->json([$output]);
+
         } else {
-            return "non";
+            $output = "non";
         }
+
+        Notification::send(new User(), new Deploy($output));
+        return response()->json([$output]);
     }
 }

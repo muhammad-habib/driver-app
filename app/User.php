@@ -47,4 +47,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack()
+    {
+        return "https://hooks.slack.com/services/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";
+    }
 }
