@@ -31,9 +31,9 @@ class DeploymentController extends Controller
             return response()->json(['message' => $msg], 400);
         }
         $output = '';
+        $push = $request->get('push');
         if($request->get('commandId') == config('development.deployment.push_command_id')) {
 
-            $push = $request->get('push');
             if ($push['changes'][0]['new']['type'] == config('development.deployment.changes_to_be_deployed') &&
                 $push['changes'][0]['new']['name'] == config('development.deployment.current_branch')
             ) {
@@ -53,7 +53,13 @@ class DeploymentController extends Controller
         } else {
             $output = "non";
         }
-        Notification::send(new User(), new Deploy($output));
+        $message = $output;
+        if(isset($push['changes'][0]['new']['target'])) {
+            $target = $push['changes'][0]['new']['target'];
+            $message = $target['auther'] . ' deployed some fresh code!\n';
+            $message .= 'The Message: ' . $target['message'] . '\n';
+        }
+        Notification::send(new User(), new Deploy($message));
         return response()->json([$output]);
     }
 }
