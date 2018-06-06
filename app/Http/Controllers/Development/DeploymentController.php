@@ -49,11 +49,11 @@ class DeploymentController extends Controller
                 });
 
             }
-            
+
         } else {
             $output = "non";
         }
-        $message = $output;
+        $message = '';
         if(isset($push['changes'][0]['new']['target'])) {
             $target = $push['changes'][0]['new']['target'];
             $message = $target['author']['raw'] . ': deployed some fresh code! 
@@ -63,6 +63,8 @@ class DeploymentController extends Controller
             $message .= 'The Commit: ' . $target['links']['html']['href'] . '
 ';
         }
+        $message .= 'The Deployment Output: ' . $output . '
+';
         Notification::send(new User(), new Deploy($message));
         return response()->json([$output]);
     }
