@@ -56,8 +56,10 @@ class DeploymentController extends Controller
         $message = $output;
         if(isset($push['changes'][0]['new']['target'])) {
             $target = $push['changes'][0]['new']['target'];
-            $message = $target['author'] . ' deployed some fresh code!\n';
-            $message .= 'The Message: ' . $target['message'] . '\n';
+            $message = $target['author'] . ': deployed some fresh code! 
+            ';
+            $message .= 'The Message: ' . $target['message'] . '
+            ';
         }
         Notification::send(new User(), new Deploy($message));
         return response()->json([$output]);
