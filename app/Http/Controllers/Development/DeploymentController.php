@@ -53,7 +53,6 @@ class DeploymentController extends Controller
         } else {
             $output = "non";
         }
-
         Notification::send(new User(), new Deploy($output));
         return response()->json([$output]);
     }
