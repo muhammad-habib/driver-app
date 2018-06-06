@@ -65,6 +65,7 @@ class DeploymentController extends Controller
         }
         $message .= 'The Deployment Output: ' . $output . '
 ';
+        
         Notification::send(new User(), new Deploy($message));
         return response()->json([$output]);
     }
