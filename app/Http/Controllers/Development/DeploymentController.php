@@ -46,6 +46,7 @@ class DeploymentController extends Controller
                         var_dump($buffer);
                     } else {
                         $output = $buffer;
+                        var_dump( '1' . $buffer);
                     }
                 });
 
