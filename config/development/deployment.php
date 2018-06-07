@@ -11,6 +11,11 @@ $array = [
     'changes_to_be_deployed' => 'branch', //changes to be deployed
 ];
  $array['git_commands'] =  [
-    'pull_current_branch' => 'git pull origin ' . $array['current_branch'],
+    'pull_current_branch' => '
+        git fetch && 
+        git reset --hard origin/development ' . $array['current_branch'] . ' &&
+        php composer.phar update --ignore-platform-reqs
+        
+    ',
 ];
 return $array;
