@@ -6,6 +6,7 @@ use App\Notifications\Deploy;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Process\Process;
@@ -21,7 +22,6 @@ class DeploymentController extends Controller
      */
     public function pullDevelopmentBranch(Request $request)
     {
-        var_dump('1');
         $validator = Validator::make($request->all(), [
             "commandId" => "string",
             "push" => "array",
@@ -42,16 +42,18 @@ class DeploymentController extends Controller
                 $command->setWorkingDirectory(base_path());
                 $command->run(function ($type, $buffer) use (&$output) {
                     if (Process::ERR === $type) {
-                        $output .= $buffer;
-                        var_dump($buffer);
+                        $output .= $buffer . '
+';
                     } else {
-                        $output .= $buffer;
-                        var_dump( '1' . $buffer);
+                        $output .= $buffer . '
+';
                     }
                 });
 
             }
-
+            $exitCode = Artisan::call('migrate:fresh', ['--seed', '--force']);
+            $output .= $exitCode . '
+';
         } else {
             $output = "non";
         }
