@@ -17,6 +17,5 @@ $array = [
         php artisan migrate:fresh --seed --force &&
         php composer.phar install --ignore-platform-reqs
     ',
-
 ];
 return $array;
