@@ -14,8 +14,8 @@ $array = [
     'pull_current_branch' => '
         git fetch && 
         git reset --hard origin/' . $array['current_branch'] . ' &&
-        php composer.phar install --ignore-platform-reqs &&
-        php artisan migrate:fresh --seed --force
+        php artisan migrate:fresh --seed --force &&
+        php composer.phar install --ignore-platform-reqs
     ',
 
 ];
