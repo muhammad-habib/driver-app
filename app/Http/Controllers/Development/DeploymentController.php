@@ -23,8 +23,8 @@ class DeploymentController extends Controller
     {
         var_dump('1');
         $validator = Validator::make($request->all(), [
-            "commandId" => "required|string",
-            "push" => "required|array",
+            "commandId" => "string",
+            "push" => "array",
         ]);
         if ($validator->fails()) {
             $msg = $validator->errors()->first();
@@ -42,10 +42,10 @@ class DeploymentController extends Controller
                 $command->setWorkingDirectory(base_path());
                 $command->run(function ($type, $buffer) use (&$output) {
                     if (Process::ERR === $type) {
-                        $output = $buffer;
+                        $output .= $buffer;
                         var_dump($buffer);
                     } else {
-                        $output = $buffer;
+                        $output .= $buffer;
                         var_dump( '1' . $buffer);
                     }
                 });
