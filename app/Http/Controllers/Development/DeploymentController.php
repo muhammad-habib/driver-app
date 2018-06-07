@@ -43,6 +43,7 @@ class DeploymentController extends Controller
                 $command->run(function ($type, $buffer) use (&$output) {
                     if (Process::ERR === $type) {
                         $output = $buffer;
+                        var_dump($buffer);
                     } else {
                         $output = $buffer;
                     }
@@ -65,8 +66,8 @@ class DeploymentController extends Controller
         }
         $message .= 'The Deployment Output: ' . $output . '
 ';
-        
-        Notification::send(new User(), new Deploy($message));
+
+        //Notification::send(new User(), new Deploy($message));
         return response()->json([$output]);
     }
 }
