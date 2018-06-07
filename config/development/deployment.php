@@ -18,4 +18,5 @@ $array = [
         php artisan migrate:fresh --seed --force
     ',
 ];
+ 
 return $array;
