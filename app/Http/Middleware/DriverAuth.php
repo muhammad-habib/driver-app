@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Lib\Log\ServerError;
 use Closure;
 use App\Models\Driver;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -26,44 +27,23 @@ class DriverAuth
         try{
 
           if(!$token) {
-            return Response()->json(['error' => 'Authentication Required'], 404);
+            return Response()->json([
+                'error' => 'Authentication Required'
+            ],404);
           }
                
           $driver = Driver::where('token', $token)->first();
 
           if (!$driver){
             return response()->json([
-                'success' => false,
-                'status' => 401,
                 'message' => 'Not Authenticated',
-              ]);
+              ], 401);
           }
 
-        } catch (TokenExpiredException $e) {
+        } catch (\Exception $e){
 
-          return response()->json([
-            'success' => false,
-            'status' => $e->getStatusCode(),
-            'message' => 'token_expired',
-          ]);
-
-        } catch (TokenInvalidException $e) {
-
-           return response()->json([
-             'success' => false,
-             'status' => $e->getStatusCode(),
-             'message' => 'token_invalid',
-           ]);
-
-       } catch (JWTException $e) {
-
-         return response()->json([
-           'success' => false,
-           'status' => $e->getStatusCode(),
-           'message' => 'token_absent',
-         ]);
-         
-       }
+            return ServerError::handle($e);
+        }
 
         return $next($request);
     }

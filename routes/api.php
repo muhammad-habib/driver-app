@@ -18,9 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
+Route::group(['prefix' => 'driver-app', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
 
     Route::post('login', 'AuthController@login');
+
     Route::group(['middleware' => 'auth.driver'], function(){ // Driver Authentication
         Route::get('logout', 'AuthController@logout');
         
