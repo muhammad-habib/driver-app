@@ -105,6 +105,8 @@ return [
     */
 
     'key' => env('APP_KEY'),
+    'cipher-' => 'AES-128-CBC',
+
 
     'cipher' => 'AES-256-CBC',
 
@@ -168,7 +170,7 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-
+        L5Swagger\L5SwaggerServiceProvider::class,
         /*
          * Application Service Providers...
          */

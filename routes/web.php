@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/slack', function () {
+
+    Notification::send(new \App\User(), new \App\Notifications\Deploy('Hi from Anas!'));
+});

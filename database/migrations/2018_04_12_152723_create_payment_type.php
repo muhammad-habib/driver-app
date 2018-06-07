@@ -24,7 +24,9 @@ class CreatePaymentType extends Migration
 
             // the company relationship -> Company (1) to (*) Task
             $table->unsignedInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
 
             $table->timestamps();
 
