@@ -13,10 +13,10 @@ $array = [
  $array['git_commands'] =  [
     'pull_current_branch' => '
         git fetch && 
-        git reset --hard origin/development ' . $array['current_branch'] . ' &&
+        git reset --hard origin/' . $array['current_branch'] . ' &&
         php composer.phar install --ignore-platform-reqs &&
         php artisan migrate:fresh --seed --force
     ',
-     
+
 ];
 return $array;
