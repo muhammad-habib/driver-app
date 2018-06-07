@@ -19,8 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
-    
-    Route::post('register', 'AuthController@register');
+
     Route::post('login', 'AuthController@login');
     Route::group(['middleware' => 'auth.driver'], function(){ // Driver Authentication
         Route::get('logout', 'AuthController@logout');
@@ -74,7 +73,15 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Portal', 'middleware' => 'lang']
     });
 });
 
+Route::group(['prefix' => 'v1', 'namespace' => 'Portal', 'middleware' => 'lang'], function (){
 
+    Route::group(['prefix' => 'drivers', 'namespace' => 'Driver'], function (){
+        Route::get('/', 'DriverController@index');
+        Route::post('/', 'DriverController@create');
+        Route::put('/{driver_id}', 'DriverController@update');
+        Route::delete('/{driver_id}', 'DriverController@delete');
+    });
+});
 
 // Testing APIs
 Route::get('users', 'Pet@index');

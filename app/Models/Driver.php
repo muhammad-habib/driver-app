@@ -42,6 +42,6 @@ class Driver extends Model
 
     public function teams()
     {
-        $this->belongsToMany(Team::class, 'driver_team', 'driver_id', 'team_id');
+        return $this->belongsToMany(Team::class, 'driver_team', 'driver_id', 'team_id');
     }
 }

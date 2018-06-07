@@ -155,7 +155,7 @@ class TeamController extends Controller
 
             // make the needed parameters validation
             $validator = Validator::make($request->all(), [
-                'team_id' => 'required|numeric|exists:companies,id',
+                'team_id' => 'required|numeric|exists:teams,id',
             ]);
 
             if ($validator->fails()) {
@@ -166,7 +166,7 @@ class TeamController extends Controller
             $team = Team::find($request->team_id);
 
             // remove all related drivers from the pivot
-            $team->drivers()->delete();
+            $team->drivers()->detach();
 
             // remove the team itself
             $team->delete();

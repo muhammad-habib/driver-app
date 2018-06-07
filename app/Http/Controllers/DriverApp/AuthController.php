@@ -15,29 +15,6 @@ use Tymon\JWTAuth\Facades\JWTFactory;
 class AuthController extends Controller
 {
     
-	/**
-	* Uncomplete Register Function made for just testing login
-	*
-	*
-	*/
-    public function register(Request $request)
-    {
-    	$driver = Driver::create([
-    		'name' => $request->get('name'),
-    		'awb' => $request->get('awb'),
-    		'company_id' => $request->get('company_id'),
-           	'user_name' => $request->get('user_name'),
-           	'password' => Hash::make($request->get('password')),
-        ]);
-        
-        if($driver){
-        	return 'success';
-        }else{
-        	return 'failed';
-        }
-    }
-
-    
     /**
     *	Driver Login
     *
