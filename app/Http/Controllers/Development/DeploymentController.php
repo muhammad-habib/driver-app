@@ -51,7 +51,7 @@ class DeploymentController extends Controller
                 });
 
             }
-            $exitCode = Artisan::call('migrate:fresh', ['--seed', '--force']);
+            $exitCode = Artisan::call('migrate:fresh', ['--seed' => '', '--force' => '']);
             $output .= $exitCode . '
 ';
         } else {
