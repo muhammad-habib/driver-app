@@ -20,6 +20,9 @@ class Driver extends Model
         'mobile',
         'image'
     ];
+
+    protected $hidden = ['password', 'token'];
+
     private $name;
     private $awb;
     private $company_id;
