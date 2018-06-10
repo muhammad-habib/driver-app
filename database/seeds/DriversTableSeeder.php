@@ -12,6 +12,7 @@ class DriversTableSeeder extends Seeder
     public function run()
     {
         DB::table('drivers')->insert([
+            'name' => 'Test Driver',
             'mobile' => '551234567',
             'password' => bcrypt('123456')
         ]);
