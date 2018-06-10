@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
              PaymentTypesTableSeeder::class,
              TaskOperationTypesTableSeeder::class,
              TaskStatusTableSeeder::class,
+             DriversTableSeeder::class,
          ]);
     }
 }
