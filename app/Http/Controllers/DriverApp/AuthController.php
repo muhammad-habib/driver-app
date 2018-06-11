@@ -14,36 +14,15 @@ use Tymon\JWTAuth\Facades\JWTFactory;
 
 class AuthController extends Controller
 {
-    
-	/**
-	* Uncomplete Register Function made for just testing login
-	*
-	*
-	*/
-    public function register(Request $request)
-    {
-    	$driver = Driver::create([
-    		'name' => $request->get('name'),
-    		'awb' => $request->get('awb'),
-    		'company_id' => $request->get('company_id'),
-           	'user_name' => $request->get('user_name'),
-           	'password' => Hash::make($request->get('password')),
-        ]);
-        
-        if($driver){
-        	return 'success';
-        }else{
-        	return 'failed';
-        }
-    }
 
-    
     /**
-    *	Driver Login
-    *
-    *	@param Request $request
-    * 	@return Json
-    */
+     * @author Amr Elsayed
+     * @api driver login
+     * @since 24/04/2018
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @version 1.0
+     */
 
     /**
      * @SWG\Post(
@@ -128,36 +107,35 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
-    	// check input validation
-        $validator = Validator::make($request->all(), [
-            'user_name' => 'required',
-            'password' => 'required'
-        ]);
-        
-        // return validation errors if detected
-        if ($validator->fails()){
-            return ValidationError::handle($validator);
-        }
-        
         try{
 
+            // check input validation
+            $validator = Validator::make($request->all(), [
+                'mobile' => 'required|string',
+                'password' => 'required|string'
+            ]);
+
+            // return validation errors if detected
+            if ($validator->fails()){
+                return ValidationError::handle($validator);
+            }
+
             // get driver
-            $driver = Driver::where('user_name',  $request->get('user_name'))->first();
+            $driver = Driver::where('mobile',  $request->get('mobile'))->first();
 
             // return failed message if driver doesn't exist
             if(!$driver){
                 return response()->json([
-                    'message' => trans('driver_auth.login.error.user_name')
-                ], 401);
+                    'message' => trans('driver.auth.login.error.mobile')
+                ], 404);
             }
 
             // comparing hashed password & if not equal to driver password in db return error message
             if (!Hash::check($request->get('password'), $driver->password))
             {
                 return response()->json([
-                    'message' => trans('driver_auth.login.error.password')
-                ], 401);
+                    'message' => trans('driver.auth.login.error.password')
+                ], 400);
             }
             
             // generate token
@@ -169,10 +147,15 @@ class AuthController extends Controller
             $driver->token = $token->get();
             $driver->save();
 
+            $data = [
+                'token' => $driver->token,
+                'driver' => $driver
+            ];
+
             // return driver token
             return response()->json([
-                'message' => trans('driver_auth.login.success'),
-                'data' =>  $driver->token,
+                'message' => trans('driver.auth.login.success'),
+                'data' =>  $data
             ], 200);
 
         }catch (\Exception $e){
@@ -184,11 +167,13 @@ class AuthController extends Controller
     }
 
     /**
-    *   Driver logout 
-    *   
-    *   @param Request $request
-    *   @return Json
-    */
+     * @author Amr Elsayed
+     * @api driver logout
+     * @since 24/04/2018
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @version 1.0
+     */
 
     /**
      * @SWG\Get(
@@ -243,7 +228,7 @@ class AuthController extends Controller
             Driver::where('token', $token)->update(['token' => null]);
             
             return response()->json([
-                'message' => trans('driver_auth.logout_success')
+                'message' => trans('driver.auth.logout_success')
             ], 200);
 
         }catch (\Exception $e){

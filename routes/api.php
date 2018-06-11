@@ -18,10 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'v1', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
-    
-    Route::post('register', 'AuthController@register');
+Route::group(['prefix' => 'driver-app', 'namespace' => 'DriverApp', 'middleware' => 'lang'], function () {
+
     Route::post('login', 'AuthController@login');
+
     Route::group(['middleware' => 'auth.driver'], function(){ // Driver Authentication
         Route::get('logout', 'AuthController@logout');
         
@@ -77,8 +77,15 @@ Route::group(['namespace' => 'Portal', 'middleware' => 'lang'], function (){
         Route::put('/{webhook_id}', 'WebhooksController@updateWebhook');
         Route::delete('/{webhook_id}', 'WebhooksController@deleteWebhook');
     });
-});
 
+    // drivers APIs
+    Route::group(['prefix' => 'drivers', 'namespace' => 'Driver'], function (){
+        Route::get('/', 'DriverController@index');
+        Route::post('/', 'DriverController@create');
+        Route::put('/{driver_id}', 'DriverController@update');
+        Route::delete('/{driver_id}', 'DriverController@delete');
+    });
+});
 
 Route::post('/push-repo', 'Development\DeploymentController@pullDevelopmentBranch');
 // Testing APIs
