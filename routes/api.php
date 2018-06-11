@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'driver-app', 'namespace' => 'DriverApp', 'middleware' => ['lang', 'cors']], function () {
+Route::group(['prefix' => 'driver-app', 'namespace' => 'DriverApp', 'middleware' => ['lang', \Barryvdh\Cors\HandleCors::class]], function () {
 
     Route::post('login', 'AuthController@login');
 
