@@ -155,7 +155,7 @@ class AuthController extends Controller
             // return driver token
             return response()->json([
                 'message' => trans('driver.auth.login.success'),
-                'date' =>  $data
+                'data' =>  $data
             ], 200);
 
         }catch (\Exception $e){
