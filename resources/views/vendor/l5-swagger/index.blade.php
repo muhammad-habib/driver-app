@@ -96,9 +96,18 @@ window.onload = function() {
     ],
 
     layout: "StandaloneLayout"
-  })
+  });
 
-  window.ui = ui
+    document.getElementsByClassName('topbar-wrapper')[0].getElementsByTagName('img')[0].src = "https://zadfresh.com/assets/images/logo2x.png";
+
+    document.getElementsByClassName('topbar-wrapper')[0].getElementsByTagName('span')[0].innerHTML = "Captain";
+
+    document.getElementsByTagName('title')[0].innerHTML = "ZAD  - Captain";
+
+    document.getElementsByClassName('topbar')[0].style.backgroundColor ="rgb(245, 109, 19)";
+
+
+    window.ui = ui
 }
 </script>
 </body>
